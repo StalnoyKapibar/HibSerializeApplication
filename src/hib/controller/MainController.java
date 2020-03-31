@@ -18,10 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MainController {
     private final FileChooser fileChooser;
@@ -33,7 +30,6 @@ public class MainController {
     private Map<String, String> nameLocale;
     private Map<String, String> authorLocale;
     private Map<String, String> descLocale;
-    private File hib;
 
     @FXML
     private ImageView avatarImage;
@@ -109,6 +105,7 @@ public class MainController {
     private void chooseAvatar(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         avatar = fileChooser.showOpenDialog(source.getScene().getWindow());
+        if (avatar == null) return;
         try {
             avatarImage.setImage(SwingFXUtils.toFXImage(ImageIO.read(avatar), null));
         } catch (IOException e) {
@@ -124,8 +121,9 @@ public class MainController {
 
     @FXML
     private void deserialize(ActionEvent ae) {
+        avatarImage.setImage(null);
         Node source = (Node) ae.getSource();
-        hib = hibFileChooser.showOpenDialog(source.getScene().getWindow());
+        File hib = hibFileChooser.showOpenDialog(source.getScene().getWindow());
         Book book = null;
         try {
             book = bookService.getBook(hib);
@@ -182,6 +180,29 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void cancel(ActionEvent ae) {
+        clearText(nameRu, nameEn, nameFr, nameIt, nameDe, nameCs, nameGr);
+        clearText(authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
+        clearText(descRu, descEn, descFr, descIt, descDe, descCs, descGr);
+        avatarImage.setImage(null);
+        avatar = null;
+        additional = null;
+    }
+    private void clearText(TextInputControl ru,
+                               TextInputControl en, TextInputControl fr,
+                               TextInputControl it, TextInputControl de,
+                               TextInputControl cs, TextInputControl gr) {
+        ru.setText("");
+        en.setText("");
+        fr.setText("");
+        it.setText("");
+        de.setText("");
+        cs.setText("");
+        gr.setText("");
+    }
+
 
     private byte[] convertImage(File file) throws IOException {
         return Files.readAllBytes(file.toPath());
