@@ -121,9 +121,10 @@ public class MainController {
 
     @FXML
     private void deserialize(ActionEvent ae) {
-        avatarImage.setImage(null);
         Node source = (Node) ae.getSource();
         File hib = hibFileChooser.showOpenDialog(source.getScene().getWindow());
+        if (hib == null) return;
+        avatarImage.setImage(null);
         Book book = null;
         try {
             book = bookService.getBook(hib);
