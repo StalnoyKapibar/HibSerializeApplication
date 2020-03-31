@@ -236,7 +236,6 @@ public class MainController {
                 ex.printStackTrace();
             }
         });
-
         additionalListView.getItems().addAll(images);
 
     }
@@ -259,6 +258,9 @@ public class MainController {
         setLocaleText(book.getAuthor(), authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         setLocaleText(book.getDesc(), descRu, descEn, descFr, descIt, descDe, descCs, descGr);
         setLocaleText(book.getEdition(), editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
+        pages.setText(book.getPages().toString());
+        year.setText(book.getYearOfEdition());
+        price.setText(book.getPrice().toString());
 
         if (book.getAvatar() != null) {
             try {
