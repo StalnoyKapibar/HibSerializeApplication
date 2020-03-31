@@ -2,6 +2,7 @@ package hib.model;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 public class LocaleString implements Serializable {
     private String ru;
@@ -86,5 +87,37 @@ public class LocaleString implements Serializable {
 
     public void setGr(String gr) {
         this.gr = gr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LocaleString that = (LocaleString) o;
+        return Objects.equals(ru, that.ru) &&
+                Objects.equals(en, that.en) &&
+                Objects.equals(fr, that.fr) &&
+                Objects.equals(it, that.it) &&
+                Objects.equals(de, that.de) &&
+                Objects.equals(cs, that.cs) &&
+                Objects.equals(gr, that.gr);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ru, en, fr, it, de, cs, gr);
+    }
+
+    @Override
+    public String toString() {
+        return "LocaleString{" +
+                "ru='" + ru + '\'' +
+                ", en='" + en + '\'' +
+                ", fr='" + fr + '\'' +
+                ", it='" + it + '\'' +
+                ", de='" + de + '\'' +
+                ", cs='" + cs + '\'' +
+                ", gr='" + gr + '\'' +
+                '}';
     }
 }

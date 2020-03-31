@@ -1,7 +1,9 @@
 package hib.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Book implements Serializable {
     private LocaleString name;
@@ -57,5 +59,35 @@ public class Book implements Serializable {
 
     public void setAdditionalPhotos(List<byte[]> additionalPhotos) {
         this.additionalPhotos = additionalPhotos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(name, book.name) &&
+                Objects.equals(author, book.author) &&
+                Objects.equals(desc, book.desc) &&
+                Arrays.equals(avatar, book.avatar) &&
+                Objects.equals(additionalPhotos, book.additionalPhotos);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, author, desc, additionalPhotos);
+        result = 31 * result + Arrays.hashCode(avatar);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name=" + name +
+                ", author=" + author +
+                ", desc=" + desc +
+                ", avatar=" + Arrays.toString(avatar) +
+                ", additionalPhotos=" + additionalPhotos +
+                '}';
     }
 }
