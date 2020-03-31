@@ -1,5 +1,6 @@
 package hib.controller;
 
+import com.github.sarxos.webcam.Webcam;
 import hib.model.Book;
 import hib.model.LocaleString;
 import hib.service.BookService;
@@ -7,19 +8,23 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainController {
     private final FileChooser fileChooser;
@@ -31,9 +36,7 @@ public class MainController {
     private Map<String, String> nameLocale;
     private Map<String, String> authorLocale;
     private Map<String, String> descLocale;
-
-    @FXML
-    private ImageView avatarImage;
+    private Map<String, String> editionLocale;
 
     @FXML
     private TextField nameRu;
@@ -41,6 +44,8 @@ public class MainController {
     private TextField authorRu;
     @FXML
     private TextArea descRu;
+    @FXML
+    private TextField editionRu;
 
     @FXML
     private TextField nameEn;
@@ -48,6 +53,8 @@ public class MainController {
     private TextField authorEn;
     @FXML
     private TextArea descEn;
+    @FXML
+    private TextField editionEn;
 
     @FXML
     private TextField nameFr;
@@ -55,6 +62,8 @@ public class MainController {
     private TextField authorFr;
     @FXML
     private TextArea descFr;
+    @FXML
+    private TextField editionFr;
 
     @FXML
     private TextField nameIt;
@@ -62,6 +71,8 @@ public class MainController {
     private TextField authorIt;
     @FXML
     private TextArea descIt;
+    @FXML
+    private TextField editionIt;
 
     @FXML
     private TextField nameDe;
@@ -69,6 +80,8 @@ public class MainController {
     private TextField authorDe;
     @FXML
     private TextArea descDe;
+    @FXML
+    private TextField editionDe;
 
     @FXML
     private TextField nameCs;
@@ -76,6 +89,8 @@ public class MainController {
     private TextField authorCs;
     @FXML
     private TextArea descCs;
+    @FXML
+    private TextField editionCs;
 
     @FXML
     private TextField nameGr;
@@ -83,17 +98,20 @@ public class MainController {
     private TextField authorGr;
     @FXML
     private TextArea descGr;
+    @FXML
+    private TextField editionGr;
 
     @FXML
     private TextField year;
-
-    @FXML TextField pages;
-
     @FXML
     private TextField price;
+    @FXML
+    TextField pages;
 
     @FXML
     private ListView<ImageView> additionalListView;
+    @FXML
+    private ImageView avatarImage;
 
 
     public MainController() {
@@ -110,7 +128,22 @@ public class MainController {
         nameLocale = new HashMap<>();
         authorLocale = new HashMap<>();
         descLocale = new HashMap<>();
+        editionLocale = new HashMap<>();
         bookService = new BookService();
+    }
+
+    @FXML
+    private void addAvatarAsWebCam(ActionEvent ae) {
+        Webcam webcam = Webcam.getDefault();
+        webcam.open();
+        BufferedImage bufferedImage = webcam.getImage();
+
+        try {
+            ImageIO.write(bufferedImage, "JPG", new File("text.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        webcam.close();
     }
 
     @FXML
@@ -185,13 +218,16 @@ public class MainController {
         getLocaleText(nameLocale, nameRu, nameEn, nameFr, nameIt, nameDe, nameCs, nameGr);
         getLocaleText(authorLocale, authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         getLocaleText(descLocale, descRu, descEn, descFr, descIt, descDe, descCs, descGr);
+        getLocaleText(editionLocale, editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
 
         Book book = new Book(new LocaleString(nameLocale),
-                new LocaleString(authorLocale), new LocaleString(descLocale));
+                new LocaleString(authorLocale),
+                new LocaleString(descLocale),
+                new LocaleString(editionLocale));
 
         book.setYearOfEdition(year.getText());
-        book.setPages(Long.parseLong(pages.getText()));
-        book.setPrice(Long.parseLong(price.getText()));
+        if (!pages.getText().equals("")) book.setPages(Long.parseLong(pages.getText()));
+        if (!price.getText().equals("")) book.setPrice(Long.parseLong(price.getText()));
 
         try {
             List<byte[]> additionalBytes = new ArrayList<>();
@@ -218,14 +254,20 @@ public class MainController {
         clearText(nameRu, nameEn, nameFr, nameIt, nameDe, nameCs, nameGr);
         clearText(authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         clearText(descRu, descEn, descFr, descIt, descDe, descCs, descGr);
+        clearText(editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
+        price.setText("");
+        year.setText("");
+        pages.setText("");
         avatarImage.setImage(null);
         avatar = null;
         additional = null;
+        additionalListView.getItems().clear();
     }
+
     private void clearText(TextInputControl ru,
-                               TextInputControl en, TextInputControl fr,
-                               TextInputControl it, TextInputControl de,
-                               TextInputControl cs, TextInputControl gr) {
+                           TextInputControl en, TextInputControl fr,
+                           TextInputControl it, TextInputControl de,
+                           TextInputControl cs, TextInputControl gr) {
         ru.setText("");
         en.setText("");
         fr.setText("");

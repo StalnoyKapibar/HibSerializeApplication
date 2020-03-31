@@ -16,10 +16,11 @@ public class Book implements Serializable {
     private byte[] avatar;
     private List<byte[]> additionalPhotos;
 
-    public Book(LocaleString name, LocaleString author, LocaleString desc) {
+    public Book(LocaleString name, LocaleString author, LocaleString desc, LocaleString edition) {
         this.name = name;
         this.author = author;
         this.desc = desc;
+        this.edition = edition;
     }
 
     public Book() {
