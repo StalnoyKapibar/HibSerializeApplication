@@ -7,10 +7,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainController {
     private final FileChooser fileChooser;
@@ -91,6 +92,9 @@ public class MainController {
     @FXML
     private TextField price;
 
+    @FXML
+    private ListView<ImageView> additionalListView;
+
 
     public MainController() {
         fileChooser = new FileChooser();
@@ -110,7 +114,7 @@ public class MainController {
     }
 
     @FXML
-    private void chooseAvatar(ActionEvent ae) {
+    private void chooseAvatarAsDisk(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         avatar = fileChooser.showOpenDialog(source.getScene().getWindow());
         if (avatar == null) return;
@@ -122,9 +126,26 @@ public class MainController {
     }
 
     @FXML
-    private void chooseAdditional(ActionEvent ae) {
+    private void addAdditionalAsDisk(ActionEvent ae) {
         Node source = (Node) ae.getSource();
-        additional = fileChooser.showOpenMultipleDialog(source.getScene().getWindow());
+        additional = new ArrayList<>();
+        additional.addAll(fileChooser.showOpenMultipleDialog(
+                source.getScene()
+                        .getWindow()));
+        List<ImageView> images = new ArrayList<>();
+        additional.forEach(e -> {
+            try {
+                ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(e), null));
+                imageView.setFitHeight(200);
+                imageView.setFitWidth(170);
+                images.add(imageView);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        additionalListView.getItems().addAll(images);
+
     }
 
     @FXML

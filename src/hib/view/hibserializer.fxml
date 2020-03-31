@@ -11,8 +11,8 @@
         <Button fx:id="serializeBtn" layoutX="485.0" layoutY="560.0" mnemonicParsing="false" onAction="#serialize" text="Serialize" />
         <Button fx:id="cancelBtn" layoutX="26.0" layoutY="560.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
         <Button fx:id="deserializeBtn" layoutX="353.0" layoutY="560.0" mnemonicParsing="false" onAction="#deserialize" text="Deserialize" />
-        <Button layoutX="102.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatar" text="Choose Avatar..." textOverrun="CLIP" />
-        <Button layoutX="353.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAdditional" text="Choose Additional Photos..." />
+        <Button layoutX="80.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatarAsDisk" text="As disk" textOverrun="CLIP" />
+        <Button layoutX="344.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAdditionalAsDisk" text="As disk" />
         <TabPane layoutX="2.0" layoutY="200.0" prefHeight="200.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="ru">
@@ -116,12 +116,17 @@
                 </Tab>
             </tabs>
         </TabPane>
-      <ImageView fx:id="avatarImage" fitHeight="149.0" fitWidth="101.0" layoutX="102.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="avatarImage" fitHeight="123.0" fitWidth="108.0" layoutX="98.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="year" layoutX="14.0" layoutY="449.0" prefHeight="25.0" prefWidth="149.0" />
       <Text layoutX="14.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of edition" />
       <TextField fx:id="price" layoutX="400.0" layoutY="449.0" />
       <Text layoutX="400.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
       <TextField fx:id="pages" layoutX="14.0" layoutY="499.0" />
       <Text layoutX="15.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages" />
+      <Text layoutX="114.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Avatar" />
+      <Button layoutX="156.0" layoutY="168.0" mnemonicParsing="false" text="Make photo" />
+      <Button layoutX="463.0" layoutY="168.0" mnemonicParsing="false" text="Make photo" />
+      <Text layoutX="415.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add photo" />
+      <ListView fx:id="additionalListView" layoutX="344.0" layoutY="32.0" prefHeight="123.0" prefWidth="200.0" />
     </children>
 </Pane>
