@@ -138,10 +138,12 @@ public class MainController {
         setLocaleText(book.getAuthor(), authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         setLocaleText(book.getDesc(), descRu, descEn, descFr, descIt, descDe, descCs, descGr);
 
-        try {
-            avatarImage.setImage(SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(book.getAvatar())), null));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (book.getAvatar() != null) {
+            try {
+                avatarImage.setImage(SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(book.getAvatar())), null));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
