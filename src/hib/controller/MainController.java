@@ -258,6 +258,7 @@ public class MainController {
         setLocaleText(book.getName(), nameRu, nameEn, nameFr, nameIt, nameDe, nameCs, nameGr);
         setLocaleText(book.getAuthor(), authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         setLocaleText(book.getDesc(), descRu, descEn, descFr, descIt, descDe, descCs, descGr);
+        setLocaleText(book.getEdition(), editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
 
         if (book.getAvatar() != null) {
             try {
@@ -265,6 +266,21 @@ public class MainController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (book.getAdditionalPhotos() != null) {
+            List<ImageView> images = new ArrayList<>();
+            book.getAdditionalPhotos().forEach(e -> {
+                try {
+                    ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(e)), null));
+                    imageView.setFitHeight(200);
+                    imageView.setFitWidth(170);
+                    images.add(imageView);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            additionalListView.getItems().addAll(images);
         }
     }
 

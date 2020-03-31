@@ -13,6 +13,9 @@ public class LocaleString implements Serializable {
     private String cs;
     private String gr;
 
+    public LocaleString() {
+    }
+
     public LocaleString(String ru, String en, String fr, String it, String de, String cs, String gr) {
         this.ru = ru;
         this.en = en;
