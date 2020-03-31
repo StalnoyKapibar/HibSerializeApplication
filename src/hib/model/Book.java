@@ -9,6 +9,10 @@ public class Book implements Serializable {
     private LocaleString name;
     private LocaleString author;
     private LocaleString desc;
+    private LocaleString edition;
+    private String yearOfEdition;
+    private Long pages;
+    private Long price;
     private byte[] avatar;
     private List<byte[]> additionalPhotos;
 
@@ -45,6 +49,38 @@ public class Book implements Serializable {
         this.desc = desc;
     }
 
+    public LocaleString getEdition() {
+        return edition;
+    }
+
+    public void setEdition(LocaleString edition) {
+        this.edition = edition;
+    }
+
+    public String getYearOfEdition() {
+        return yearOfEdition;
+    }
+
+    public void setYearOfEdition(String yearOfEdition) {
+        this.yearOfEdition = yearOfEdition;
+    }
+
+    public Long getPages() {
+        return pages;
+    }
+
+    public void setPages(Long pages) {
+        this.pages = pages;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
     public byte[] getAvatar() {
         return avatar;
     }
@@ -69,13 +105,17 @@ public class Book implements Serializable {
         return Objects.equals(name, book.name) &&
                 Objects.equals(author, book.author) &&
                 Objects.equals(desc, book.desc) &&
+                Objects.equals(edition, book.edition) &&
+                Objects.equals(yearOfEdition, book.yearOfEdition) &&
+                Objects.equals(pages, book.pages) &&
+                Objects.equals(price, book.price) &&
                 Arrays.equals(avatar, book.avatar) &&
                 Objects.equals(additionalPhotos, book.additionalPhotos);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, author, desc, additionalPhotos);
+        int result = Objects.hash(name, author, desc, edition, yearOfEdition, pages, price, additionalPhotos);
         result = 31 * result + Arrays.hashCode(avatar);
         return result;
     }
@@ -86,6 +126,10 @@ public class Book implements Serializable {
                 "name=" + name +
                 ", author=" + author +
                 ", desc=" + desc +
+                ", edition=" + edition +
+                ", yearOfEdition='" + yearOfEdition + '\'' +
+                ", pages=" + pages +
+                ", price=" + price +
                 ", avatar=" + Arrays.toString(avatar) +
                 ", additionalPhotos=" + additionalPhotos +
                 '}';

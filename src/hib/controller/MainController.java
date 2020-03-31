@@ -83,6 +83,14 @@ public class MainController {
     @FXML
     private TextArea descGr;
 
+    @FXML
+    private TextField year;
+
+    @FXML TextField pages;
+
+    @FXML
+    private TextField price;
+
 
     public MainController() {
         fileChooser = new FileChooser();
@@ -157,10 +165,12 @@ public class MainController {
         getLocaleText(authorLocale, authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         getLocaleText(descLocale, descRu, descEn, descFr, descIt, descDe, descCs, descGr);
 
-
         Book book = new Book(new LocaleString(nameLocale),
                 new LocaleString(authorLocale), new LocaleString(descLocale));
 
+        book.setYearOfEdition(year.getText());
+        book.setPages(Long.parseLong(pages.getText()));
+        book.setPrice(Long.parseLong(price.getText()));
 
         try {
             List<byte[]> additionalBytes = new ArrayList<>();

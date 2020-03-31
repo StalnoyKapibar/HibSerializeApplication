@@ -1,23 +1,23 @@
 package hib.service;
 
 import hib.model.Book;
-import hib.serializer.BookSerializer;
+import hib.serializer.BookJsonSerializer;
 
 import java.io.File;
 import java.io.IOException;
 
 public class BookService {
-    private final BookSerializer bookSerializer;
+    private final BookJsonSerializer bookJsonSerializer;
 
     public BookService() {
-        this.bookSerializer = new BookSerializer();
+        this.bookJsonSerializer = new BookJsonSerializer();
     }
 
     public void saveBook(Book book, File target) throws IOException {
-        bookSerializer.serialize(book, target);
+        bookJsonSerializer.serialize(book, target);
     }
 
     public Book getBook(File file) throws IOException, ClassNotFoundException {
-        return bookSerializer.deserialize(file);
+        return bookJsonSerializer.deserialize(file);
     }
 }
