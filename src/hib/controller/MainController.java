@@ -7,13 +7,18 @@ import hib.service.BookService;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -147,7 +152,7 @@ public class MainController {
     }
 
     @FXML
-    private void chooseAvatarAsDisk(ActionEvent ae) {
+    private void chooseAvatarFromDisk(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         avatar = fileChooser.showOpenDialog(source.getScene().getWindow());
         if (avatar == null) return;
@@ -159,12 +164,67 @@ public class MainController {
     }
 
     @FXML
-    private void addAdditionalAsDisk(ActionEvent ae) {
+    private void chooseAvatarFromWebCam(ActionEvent ae) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/webCamPreview.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setTitle("Make Photo");
+        stage.setScene(new Scene(root, 900, 690));
+        stage.showAndWait();
+        WebCamPreviewController controller = fxmlLoader.getController();
+        controller.stopCamera(ae);
+        BufferedImage photo = controller.getPhoto();
+        File lastPhoto = new File("lastPhoto.jpg");
+        try {
+            ImageIO.write(photo, "jpg", lastPhoto);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        avatar = lastPhoto;
+        avatarImage.setImage(SwingFXUtils.toFXImage(photo, null));
+    }
+
+    @FXML
+    private void addAdditionalFromWebCam(ActionEvent ae) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/webCamPreview.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setTitle("Make Photo");
+        stage.setScene(new Scene(root, 900, 690));
+        stage.showAndWait();
+        WebCamPreviewController controller = fxmlLoader.getController();
+        controller.stopCamera(ae);
+        BufferedImage photo = controller.getPhoto();
+        File lastPhoto = new File("lastPhoto.jpg");
+        try {
+            ImageIO.write(photo, "jpg", lastPhoto);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (additional == null) additional = new ArrayList<>();
+        additional.add(lastPhoto);
+        additionalListView.getItems().add(new ImageView(SwingFXUtils.toFXImage(photo, null)));
+    }
+
+    @FXML
+    private void addAdditionalFromDisk(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         additional = new ArrayList<>();
-        additional.addAll(fileChooser.showOpenMultipleDialog(
-                source.getScene()
-                        .getWindow()));
+        additional.addAll(fileChooser.showOpenMultipleDialog(source.getScene().getWindow()));
         List<ImageView> images = new ArrayList<>();
         additional.forEach(e -> {
             try {
@@ -262,6 +322,18 @@ public class MainController {
         avatar = null;
         additional = null;
         additionalListView.getItems().clear();
+    }
+
+    @FXML
+    private void deleteAvatar(ActionEvent ae) {
+        avatar = null;
+        avatarImage.setImage(null);
+    }
+
+    @FXML
+    private void deleteAdditional(ActionEvent ae) {
+        additionalListView.getItems().clear();
+        additional = null;
     }
 
     private void clearText(TextInputControl ru,

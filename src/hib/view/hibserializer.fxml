@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hib.controller.MainController">
     <children>
-        <Button fx:id="serializeBtn" layoutX="485.0" layoutY="560.0" mnemonicParsing="false" onAction="#serialize" text="Serialize" />
-        <Button fx:id="cancelBtn" layoutX="26.0" layoutY="560.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-        <Button fx:id="deserializeBtn" layoutX="353.0" layoutY="560.0" mnemonicParsing="false" onAction="#deserialize" text="Deserialize" />
-        <Button layoutX="80.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatarAsDisk" text="from disk" textOverrun="CLIP" />
-        <Button layoutX="344.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAdditionalAsDisk" text="from disk" />
+        <Button fx:id="serializeBtn" layoutX="485.0" layoutY="560.0" mnemonicParsing="false" onAction="#serialize"
+                text="Serialize"/>
+        <Button fx:id="cancelBtn" layoutX="26.0" layoutY="560.0" mnemonicParsing="false" onAction="#cancel"
+                text="Cancel"/>
+        <Button fx:id="deserializeBtn" layoutX="353.0" layoutY="560.0" mnemonicParsing="false" onAction="#deserialize"
+                text="Deserialize"/>
+        <Button layoutX="80.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatarFromDisk" text="from disk"
+                textOverrun="CLIP"/>
+        <Button layoutX="344.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAdditionalFromDisk"
+                text="from disk"/>
         <TabPane layoutY="199.0" prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="50.0">
             <tabs>
                 <Tab text="ru">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="600.0">
                             <children>
-                                <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0" />
-                                <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0" />
-                                <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="100.0" prefWidth="350.0" />
-                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name ru" />
+                                <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0"/>
+                                <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0"/>
+                                <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                          prefWidth="350.0"/>
+                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="name ru"/>
                                 <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="author ru" />
                                 <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description ru" />
                         <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -130,17 +135,23 @@
                 </Tab>
             </tabs>
         </TabPane>
-      <ImageView fx:id="avatarImage" fitHeight="123.0" fitWidth="108.0" layoutX="98.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="year" layoutX="14.0" layoutY="449.0" prefHeight="25.0" prefWidth="149.0" />
-      <Text layoutX="14.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of edition" />
-      <TextField fx:id="price" layoutX="400.0" layoutY="449.0" />
-      <Text layoutX="400.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
-      <TextField fx:id="pages" layoutX="14.0" layoutY="499.0" />
-      <Text layoutX="15.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages" />
-      <Text layoutX="114.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Avatar" />
-      <Button layoutX="156.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAvatarAsWebCam" text="make photo" />
-      <Button layoutX="463.0" layoutY="168.0" mnemonicParsing="false" text="make photo" />
-      <Text layoutX="415.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add photo" />
-      <ListView fx:id="additionalListView" layoutX="344.0" layoutY="32.0" prefHeight="123.0" prefWidth="200.0" />
+        <ImageView fx:id="avatarImage" fitHeight="123.0" fitWidth="108.0" layoutX="98.0" layoutY="32.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <TextField fx:id="year" layoutX="14.0" layoutY="449.0" prefHeight="25.0" prefWidth="149.0"/>
+        <Text layoutX="14.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of edition"/>
+        <TextField fx:id="price" layoutX="400.0" layoutY="449.0"/>
+        <Text layoutX="400.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+        <TextField fx:id="pages" layoutX="14.0" layoutY="499.0"/>
+        <Text layoutX="15.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
+        <Text layoutX="114.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Avatar"/>
+        <Button layoutX="156.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatarFromWebCam"
+                text="make photo"/>
+        <Button layoutX="463.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAdditionalFromWebCam"
+                text="make photo"/>
+        <Text layoutX="415.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add photo"/>
+        <ListView fx:id="additionalListView" layoutX="344.0" layoutY="32.0" prefHeight="123.0" prefWidth="200.0"/>
+        <Button layoutX="210.0" layoutY="32.0" mnemonicParsing="false" onAction="#deleteAvatar" text="X"/>
+        <Button layoutX="545.0" layoutY="32.0" mnemonicParsing="false" onAction="#deleteAdditional" prefHeight="25.0"
+                prefWidth="31.0" text="X"/>
     </children>
 </Pane>
