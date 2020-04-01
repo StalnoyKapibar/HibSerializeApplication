@@ -1,6 +1,5 @@
 package hib.controller;
 
-import com.github.sarxos.webcam.Webcam;
 import hib.model.Book;
 import hib.model.LocaleString;
 import hib.service.BookService;
@@ -138,20 +137,6 @@ public class MainController {
     }
 
     @FXML
-    private void addAvatarAsWebCam(ActionEvent ae) {
-        Webcam webcam = Webcam.getDefault();
-        webcam.open();
-        BufferedImage bufferedImage = webcam.getImage();
-
-        try {
-            ImageIO.write(bufferedImage, "JPG", new File("text.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        webcam.close();
-    }
-
-    @FXML
     private void chooseAvatarFromDisk(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         avatar = fileChooser.showOpenDialog(source.getScene().getWindow());
@@ -165,34 +150,20 @@ public class MainController {
 
     @FXML
     private void chooseAvatarFromWebCam(ActionEvent ae) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/webCamPreview.fxml"));
-        Parent root = null;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setOpacity(1);
-        stage.setTitle("Make Photo");
-        stage.setScene(new Scene(root, 900, 690));
-        stage.showAndWait();
-        WebCamPreviewController controller = fxmlLoader.getController();
-        controller.stopCamera(ae);
-        BufferedImage photo = controller.getPhoto();
-        File lastPhoto = new File("lastPhoto.jpg");
-        try {
-            ImageIO.write(photo, "jpg", lastPhoto);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       File lastPhoto = new File("lastPhoto.jpg");
         avatar = lastPhoto;
-        avatarImage.setImage(SwingFXUtils.toFXImage(photo, null));
+        avatarImage.setImage(SwingFXUtils.toFXImage(getPhotoFromWebCam(ae, lastPhoto), null));
     }
 
     @FXML
     private void addAdditionalFromWebCam(ActionEvent ae) {
+        if (additional == null) additional = new ArrayList<>();
+        File lastPhoto = new File("lastPhoto.jpg");
+        additional.add(lastPhoto);
+        additionalListView.getItems().add(new ImageView(SwingFXUtils.toFXImage(getPhotoFromWebCam(ae, lastPhoto), null)));
+    }
+
+    private BufferedImage getPhotoFromWebCam(ActionEvent ae, File target) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/webCamPreview.fxml"));
         Parent root = null;
         try {
@@ -209,15 +180,12 @@ public class MainController {
         WebCamPreviewController controller = fxmlLoader.getController();
         controller.stopCamera(ae);
         BufferedImage photo = controller.getPhoto();
-        File lastPhoto = new File("lastPhoto.jpg");
         try {
-            ImageIO.write(photo, "jpg", lastPhoto);
+            ImageIO.write(photo, "jpg", target);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (additional == null) additional = new ArrayList<>();
-        additional.add(lastPhoto);
-        additionalListView.getItems().add(new ImageView(SwingFXUtils.toFXImage(photo, null)));
+        return photo;
     }
 
     @FXML
