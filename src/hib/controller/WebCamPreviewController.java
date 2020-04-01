@@ -143,7 +143,6 @@ public class WebCamPreviewController implements Initializable {
 
             @Override
             protected Void call() throws Exception {
-
                 while (!stopCamera) {
                     try {
                         if ((grabbedImage = selWebCam.getImage()) != null) {
@@ -160,7 +159,6 @@ public class WebCamPreviewController implements Initializable {
                         //ignored
                     }
                 }
-
                 return null;
             }
 

@@ -28,11 +28,14 @@
                                           prefWidth="350.0"/>
                                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="name ru"/>
-                                <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="author ru" />
-                                <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description ru" />
-                        <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                        <TextField fx:id="editionRu" layoutX="14.0" layoutY="155.0" />
-                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edition ru" />
+                                <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="author ru"/>
+                                <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="description ru"/>
+                                <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                                <TextField fx:id="editionRu" layoutX="14.0" layoutY="155.0"/>
+                                <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="edition ru"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -125,10 +128,13 @@
                                 <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0" />
                                 <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="100.0" prefWidth="350.0" />
                                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name gr" />
-                                <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="author gr" />
-                                <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description gr" />
-                        <TextField fx:id="editionGr" layoutX="14.0" layoutY="155.0" />
-                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edition gr" />
+                                <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="author gr"/>
+                                <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="description gr"/>
+                                <TextField fx:id="editionGr" layoutX="14.0" layoutY="155.0"/>
+                                <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="edition gr"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -143,7 +149,7 @@
         <Text layoutX="400.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
         <TextField fx:id="pages" layoutX="14.0" layoutY="499.0"/>
         <Text layoutX="15.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
-        <Text layoutX="114.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Avatar"/>
+        <Text layoutX="114.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose CoverImage"/>
         <Button layoutX="156.0" layoutY="168.0" mnemonicParsing="false" onAction="#chooseAvatarFromWebCam"
                 text="make photo"/>
         <Button layoutX="463.0" layoutY="168.0" mnemonicParsing="false" onAction="#addAdditionalFromWebCam"
