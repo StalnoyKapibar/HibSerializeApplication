@@ -1,6 +1,6 @@
-#HIB Serializer
+# HIB Serializer
 
-Приложение позволит перевесити книгу в электронный формат
+Приложение позволит перевести книгу в электронный формат
 
 # Сборка EXE
 1) скачать и запустить exe4j https://www.ej-technologies.com/download/exe4j/files
@@ -42,3 +42,5 @@
 - Нажмите на selector Choose Camera
 - Выберите нужную веб камеру
 - Нажмите на кнопку Make a photo
+
+4) Для очистки всех полей нажмите Cancel
