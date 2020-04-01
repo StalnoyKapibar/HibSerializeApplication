@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0"
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1200.0" minHeight="600.0" minWidth="600.0"
       prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
       fx:controller="hib.controller.MainController">
     <children>
@@ -126,10 +126,12 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
                             <children>
-                                <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0" />
-                                <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0" />
-                                <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="100.0" prefWidth="350.0" />
-                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name gr" />
+                                <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0"/>
+                                <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0"/>
+                                <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                          prefWidth="350.0"/>
+                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="name gr"/>
                                 <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="author gr"/>
                                 <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"

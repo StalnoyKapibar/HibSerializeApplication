@@ -15,6 +15,7 @@ public class HibSerializerApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("HIB serializer");
+        primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("view/hibserializer.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
