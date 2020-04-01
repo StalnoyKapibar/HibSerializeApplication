@@ -1,46 +1,34 @@
 # HIB Serializer
 
-Приложение позволит перевести книгу в электронный формат
+The application will allow you to translate a book into a digital format.
 
-# Сборка EXE
-1) скачать и запустить exe4j https://www.ej-technologies.com/download/exe4j/files
-2) Тыкать некст со следующими параметрами в окошках:
-- Project Type: JAR in EXE Mode
-- Executable info: дефолтно, кроме Исполняемого имени, иконки и Advanced Options, там можно выбрать разрядность
-- Java Invocation: прописываем ClassPath и Main класс
-- собираем
+# Insallation
+1) Required components 
+- If your computer does not have Java installed - download and install it using the link from the official website www.java.com
+- If you need to use a phone as a camera, install DroidCam from Google Play  https://play.google.com/store/apps/details?id=com.dev47apps.droidcam&hl=ru and the client on your PC https://www.dev47apps.com/. 
+Setup Instructions - https://www.dev47apps.com/droidcam/connect/
+- Download file `Hib Serializer.exe`
+- **After installing the components, to avoid further issues, you must refresh your computer.**
 
+# Launch
+1) To start the program, run the `Hib Serializer.exe` application.
+2) If you need to use a phone camera - launch DroidCam on your phone and PC and connect them according to the guide using the link 
+https://www.dev47apps.com/droidcam/connect/
 
-# Установка
-1) Необходимые компоненты
-- Если на вашем компьютере не установлена Java - скачайте и установите ее по ссылке с официального сайта www.java.com
-- Если вам необходимо использовать телефон в качестве камеры - установите DroidCam из Google Play https://play.google.com/store/apps/details?id=com.dev47apps.droidcam&hl=ru
-, и клиент на ваш ПК https://www.dev47apps.com/.
-Инструкция по настройке - https://www.dev47apps.com/droidcam/connect/
-- Скачайте файл `Hib Serializer.exe`
-- **После установки компонентов воизбежании проблем необходимо перезагрузить компьютер.**
+# Working with the program 
+1) Saving a book
+- Fill the required fields in different languages
+- Add photos from your disk or webcam
+- Click “Serialize” and select the path according to which the file will be saved
 
-# Запуск
-1) Для начала работы запустите приложение `Hib Serializer.exe`
-2) Если вам необходимо использовать камеру телефона - так же запустите DroidCam на телефоне и ПК
-и подключите их согласно инструкции по ссылке https://www.dev47apps.com/droidcam/connect/
+2) Editing a book
+- Click ‘’Deserialize’’
+- Select a file with the .hib extension 
+- Make all the necessary changes.
+- Click on “Serialize” and select the path according to which the file will be saved
 
-# Работа с программой
-1) Сохранение книги
-- Заполните необходимые поля на разных языках
-- Добавьте фотографии с диска или вебкамеры
-- Нажмите на кнопку Serialize и выберите путь, куда будет сохранен файл
-
-2) Изменение книги
-- Нажмите на кнопку Deserialize
-- Выберите файл с расширением .hib
-- Сделайте все необходимые изменения
-- Нажмите на кнопку Serialize и выберите путь, куда будет сохранен файл
-
-3) Работа с вебкамерой
-- Нажмите на кнопку make photo
-- Нажмите на selector Choose Camera
-- Выберите нужную веб камеру
-- Нажмите на кнопку Make a photo
-
-4) Для очистки всех полей нажмите Cancel
+3) Working with a webcam
+- Click “Make Photo” 
+- Click selector “Choose Camera”
+- Select needed webcam
+- Click “Make a Photo” 
