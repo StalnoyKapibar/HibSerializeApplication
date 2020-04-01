@@ -2,6 +2,14 @@
 
 The application will allow you to translate a book into a digital format.
 
+# Building EXE
+1) Download and launch exe4j https://www.ej-technologies.com/download/exe4j/files
+2) Click “Next” with the following parameters in windows:
+- Project Type: JAR in EXE Mode
+- Executable info: at default, except for the executable name, icon and Advanced Options, there you can choose the bit depth
+- Java Invocation: order ClassPath and Main Class
+- Build
+
 # Insallation
 1) Required components 
 - If your computer does not have Java installed - download and install it using the link from the official website www.java.com
