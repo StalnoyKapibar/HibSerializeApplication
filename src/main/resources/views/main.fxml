@@ -62,7 +62,8 @@
                 </BorderPane>
             </top>
             <center>
-                <ListView fx:id="previewListView" prefHeight="437.0" prefWidth="358.0" BorderPane.alignment="CENTER"/>
+                <ListView fx:id="previewListView" onMouseClicked="#selectPreviewItem" prefHeight="437.0"
+                          prefWidth="358.0" BorderPane.alignment="CENTER"/>
             </center>
         </BorderPane>
     </left>

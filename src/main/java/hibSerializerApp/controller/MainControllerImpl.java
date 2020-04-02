@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -41,10 +42,12 @@ public class MainControllerImpl implements MainController {
     private final FileSystemService fileSystemService;
     private final BookService bookService;
     private Book currentBook;
+    private List<BookDTO> preview;
 
     private MainControllerImpl() {
         currentBook = new Book();
         currentBook.setAdditionalPhotos(new ArrayList<>());
+        preview = new ArrayList<>();
         fileSystemService = new FileSystemServiceImpl();
         bookService = new BookServiceImpl();
     }
@@ -85,6 +88,17 @@ public class MainControllerImpl implements MainController {
     @Override
     public void deserialize(MainViewController mainViewController, ActionEvent event) {
         File file = mainViewController.getHibFileFromDisk(event);
+        deserializeFromDisk(mainViewController, file);
+    }
+
+    @Override
+    public void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent) {
+        Integer index = mainViewController.getSelectedItemIndex("preview");
+        File file = new File(preview.get(index).getLocation());
+        deserializeFromDisk(mainViewController, file);
+    }
+
+    private void deserializeFromDisk(MainViewController mainViewController, File file) {
         try {
             currentBook = bookService.getBook(file);
         } catch (IOException | ClassNotFoundException e) {
@@ -147,6 +161,7 @@ public class MainControllerImpl implements MainController {
 
         for (File file : previewFiles) {
             BookDTO bookDTO = bookService.getBookDTO(file);
+            preview.add(bookDTO);
             Text text = new Text();
             text.setText(" " + bookDTO.getAuthor().getEn() + " - " + bookDTO.getName().getEn());
             ImageView imageView = null;

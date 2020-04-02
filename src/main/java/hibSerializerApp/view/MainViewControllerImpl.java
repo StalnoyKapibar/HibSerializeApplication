@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -212,6 +213,7 @@ public class MainViewControllerImpl implements MainViewController {
         File file = directoryChooser.showDialog(source.getScene().getWindow());
         if (file == null) return null;
         directoryChooser.setInitialDirectory(file.getParentFile());
+        hibFileChooser.setInitialDirectory(file.getParentFile());
         return file;
     }
 
@@ -286,6 +288,15 @@ public class MainViewControllerImpl implements MainViewController {
         pages.setText("");
         avatarImage.setImage(null);
         additionalListView.getItems().clear();
+    }
+
+    @Override
+    public Integer getSelectedItemIndex(String name) {
+        if (name.equals("preview")) {
+            return previewListView.getSelectionModel().getSelectedIndex();
+        } else {
+            throw new IllegalArgumentException("Nonexistent name " + name);
+        }
     }
 
     private void clearText(TextInputControl ru,
@@ -370,5 +381,9 @@ public class MainViewControllerImpl implements MainViewController {
 
     public void deserialize(ActionEvent event) {
         mainController.deserialize(this, event);
+    }
+
+    public void selectPreviewItem(MouseEvent mouseEvent) {
+        mainController.selectPreviewItem(this, mouseEvent);
     }
 }

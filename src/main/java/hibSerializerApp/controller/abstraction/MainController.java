@@ -3,6 +3,7 @@ package hibSerializerApp.controller.abstraction;
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 
 public interface MainController extends Controller {
 
@@ -27,4 +28,6 @@ public interface MainController extends Controller {
     void cancel(ViewController viewController, ActionEvent event);
 
     void deserialize(MainViewController viewController, ActionEvent event);
+
+    void selectPreviewItem(MainViewController viewController, MouseEvent mouseEvent);
 }

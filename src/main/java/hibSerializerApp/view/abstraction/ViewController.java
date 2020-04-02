@@ -35,4 +35,6 @@ public interface ViewController {
     void clearListView(String name);
 
     void clearAllRows();
+
+    Integer getSelectedItemIndex(String name);
 }
