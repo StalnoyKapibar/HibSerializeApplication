@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//TODO: реализация
 public class MainControllerImpl implements MainController {
     private static MainControllerImpl instance = new MainControllerImpl();
     private final FileSystemService fileSystemService;
