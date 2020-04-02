@@ -1,4 +1,4 @@
-package hib.controller;
+package hibSerializerApp.view;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Platform;
@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WebCamPreviewController implements Initializable {
+public class WebCamPreviewViewController implements Initializable {
 
     @FXML
     Button btnStartCamera;

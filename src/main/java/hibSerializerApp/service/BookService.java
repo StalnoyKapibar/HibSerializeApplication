@@ -1,7 +1,8 @@
-package hib.service;
+package hibSerializerApp.service;
 
-import hib.model.Book;
-import hib.serializer.BookJsonSerializer;
+import hibSerializerApp.model.Book;
+import hibSerializerApp.model.BookDTO;
+import hibSerializerApp.serializer.BookJsonSerializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,5 +20,9 @@ public class BookService {
 
     public Book getBook(File file) throws IOException, ClassNotFoundException {
         return bookJsonSerializer.deserialize(file);
+    }
+
+    public BookDTO getBookDTO(File file) {
+        return bookJsonSerializer.getBookDTO(file);
     }
 }

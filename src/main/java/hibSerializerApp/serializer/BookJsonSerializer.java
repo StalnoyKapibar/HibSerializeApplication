@@ -1,8 +1,9 @@
-package hib.serializer;
+package hibSerializerApp.serializer;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hib.model.Book;
+import hibSerializerApp.model.Book;
+import hibSerializerApp.model.BookDTO;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,5 +25,15 @@ public class BookJsonSerializer {
 
     public Book deserialize(File file) throws IOException, ClassNotFoundException {
         return mapper.readValue(file, Book.class);
+    }
+
+    public BookDTO getBookDTO(File file) {
+        try {
+            BookDTO result = mapper.readValue(file, BookDTO.class);
+            result.setLocation(file.getAbsolutePath());
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

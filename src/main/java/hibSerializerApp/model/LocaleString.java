@@ -1,4 +1,4 @@
-package hib.model;
+package hibSerializerApp.model;
 
 import java.io.Serializable;
 import java.util.Map;

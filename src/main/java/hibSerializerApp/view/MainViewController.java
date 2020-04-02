@@ -1,15 +1,19 @@
-package hib.controller;
+package hibSerializerApp.view;
 
-import hib.HibSerializerApplication;
-import hib.model.Book;
-import hib.model.LocaleString;
-import hib.service.BookService;
+import hibSerializerApp.HibSerializerApplication;
+import hibSerializerApp.model.Book;
+import hibSerializerApp.model.BookDTO;
+import hibSerializerApp.model.LocaleString;
+import hibSerializerApp.service.BookService;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
@@ -19,11 +23,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
-public class MainController {
+// TODO: Вынести логику в другие классы
+public class MainViewController {
     private final FileChooser fileChooser;
     private final FileChooser hibFileChooser;
+    private final DirectoryChooser directoryChooser;
     private final BookService bookService;
     @FXML
     TextField pages;
@@ -33,6 +42,8 @@ public class MainController {
     private Map<String, String> authorLocale;
     private Map<String, String> descLocale;
     private Map<String, String> editionLocale;
+    private List<BookDTO> previews;
+
     @FXML
     private TextField nameRu;
     @FXML
@@ -96,9 +107,13 @@ public class MainController {
     @FXML
     private ListView<ImageView> additionalListView;
     @FXML
+    private ListView<HBox> previewListView;
+    @FXML
     private ImageView avatarImage;
+    @FXML
+    private TextField searchField;
 
-    public MainController() {
+    public MainViewController() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("JPEG Files", "*.jpg")
@@ -109,11 +124,62 @@ public class MainController {
                 new FileChooser.ExtensionFilter(".hib Files", "*.hib")
         );
 
+        directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select search directory");
+
         nameLocale = new HashMap<>();
         authorLocale = new HashMap<>();
         descLocale = new HashMap<>();
         editionLocale = new HashMap<>();
         bookService = new BookService();
+    }
+
+    @FXML
+    private void searchHibFilesFromPath(ActionEvent ae) {
+        if (searchField.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Select a directory before searching");
+            alert.showAndWait();
+            return;
+        }
+
+        List<File> previewFiles = new ArrayList<>();
+
+        try (Stream<Path> paths = Files.walk(Paths.get(searchField.getText()), 1)) {
+            paths
+                    .filter(e -> e.toString().endsWith(".hib"))
+                    .forEach(path -> previewFiles.add(path.toFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (File file : previewFiles) {
+            BookDTO bookDTO = bookService.getBookDTO(file);
+            Text text = new Text();
+            text.setText(" " + bookDTO.getAuthor().getEn() + " - " + bookDTO.getName().getEn());
+            ImageView imageView = null;
+            try {
+                if (bookDTO.getAvatar() != null) imageView = new ImageView(SwingFXUtils
+                        .toFXImage((ImageIO.read(new ByteArrayInputStream(bookDTO.getAvatar()))), null));
+                else imageView = new ImageView(SwingFXUtils
+                        .toFXImage((ImageIO.read(new File("noImage.png"))), null));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(150);
+            HBox hBox = new HBox(imageView, text);
+            previewListView.getItems().addAll(hBox);
+        }
+    }
+
+    @FXML
+    private void selectSearchDirectory(ActionEvent ae) {
+        Node source = (Node) ae.getSource();
+        File dir = directoryChooser.showDialog(source.getScene().getWindow());
+        directoryChooser.setInitialDirectory(dir);
+        searchField.setText(dir.getAbsolutePath());
     }
 
     @FXML
@@ -161,7 +227,7 @@ public class MainController {
     }
 
     private byte[] getPhotoFromWebCam(ActionEvent ae) throws IOException {
-        WebCamPreviewController controller = HibSerializerApplication.startWebCamModal();
+        WebCamPreviewViewController controller = HibSerializerApplication.startWebCamModal();
         controller.stopCamera(ae);
         BufferedImage photo = controller.getPhoto();
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
@@ -190,8 +256,8 @@ public class MainController {
         additional.forEach(e -> {
             try {
                 ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(e)), null));
-                imageView.setFitHeight(200);
-                imageView.setFitWidth(170);
+                imageView.setFitHeight(600);
+                imageView.setFitWidth(400);
                 images.add(imageView);
             } catch (IOException ex) {
                 showError(ex);

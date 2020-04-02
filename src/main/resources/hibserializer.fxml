@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
+            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="hibSerializerApp.view.MainViewController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+        <BorderPane prefHeight="575.0" prefWidth="358.0" BorderPane.alignment="CENTER">
+            <top>
+                <BorderPane prefHeight="81.0" prefWidth="358.0" BorderPane.alignment="CENTER">
+                    <left>
+                        <TextField fx:id="searchField" prefHeight="25.0" prefWidth="291.0"
+                                   BorderPane.alignment="CENTER"/>
+                    </left>
+                    <center>
+                        <Button mnemonicParsing="false" onAction="#selectSearchDirectory" prefHeight="25.0"
+                                prefWidth="0.0" BorderPane.alignment="CENTER"/>
+                    </center>
+                    <right>
+                        <Button mnemonicParsing="false" onAction="#searchHibFilesFromPath" prefHeight="25.0"
+                                prefWidth="57.0" text="Search" BorderPane.alignment="CENTER"/>
+                    </right>
+                    <top>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Search .hibSerializerApp files in selected directory"
+                              wrappingWidth="288.333984375" BorderPane.alignment="CENTER">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Text>
+                    </top>
+                </BorderPane>
+            </top>
+            <center>
+                <ListView fx:id="previewListView" prefHeight="437.0" prefWidth="358.0" BorderPane.alignment="CENTER"/>
+            </center>
+        </BorderPane>
+    </left>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <top>
+                <BorderPane prefHeight="487.0" prefWidth="1093.0" BorderPane.alignment="CENTER">
+                    <left>
+                        <Pane prefHeight="487.0" prefWidth="506.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Text layoutX="156.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Choose Cover Image">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Text>
+                                <Button layoutX="78.0" layoutY="433.0" mnemonicParsing="false"
+                                        onAction="#chooseAvatarFromDisk" text="from disk" textOverrun="CLIP"/>
+                                <ImageView fx:id="avatarImage" fitHeight="365.0" fitWidth="350.0" layoutX="78.0"
+                                           layoutY="55.0" pickOnBounds="true" preserveRatio="true"/>
+                                <Button layoutX="348.0" layoutY="433.0" mnemonicParsing="false"
+                                        onAction="#chooseAvatarFromWebCam" text="make photo"/>
+                                <Button layoutX="443.0" layoutY="55.0" mnemonicParsing="false" onAction="#deleteAvatar"
+                                        text="X"/>
+                            </children>
+                        </Pane>
+                    </left>
+                    <right>
+                        <Pane prefHeight="487.0" prefWidth="564.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Button layoutX="68.0" layoutY="437.0" mnemonicParsing="false"
+                                        onAction="#addAdditionalFromDisk" text="from disk"/>
+                                <Button layoutX="419.0" layoutY="437.0" mnemonicParsing="false"
+                                        onAction="#addAdditionalFromWebCam" text="make photo"/>
+                                <Text layoutX="253.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Add photo">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Text>
+                                <ListView fx:id="additionalListView" layoutX="68.0" layoutY="56.0" prefHeight="368.0"
+                                          prefWidth="431.0"/>
+                                <Button layoutX="506.0" layoutY="56.0" mnemonicParsing="false"
+                                        onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0" text="X"/>
+                            </children>
+                        </Pane>
+                    </right>
+                </BorderPane>
+            </top>
+            <bottom>
+                <Pane prefHeight="159.0" prefWidth="614.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="serializeBtn" layoutX="515.0" layoutY="121.0" mnemonicParsing="false"
+                                onAction="#serialize" text="Serialize"/>
+                        <Button fx:id="cancelBtn" layoutX="19.0" layoutY="121.0" mnemonicParsing="false"
+                                onAction="#cancel" text="Cancel"/>
+                        <Button fx:id="deserializeBtn" layoutX="383.0" layoutY="121.0" mnemonicParsing="false"
+                                onAction="#deserialize" text="Deserialize"/>
+                        <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
+                        <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Year of edition"/>
+                        <TextField fx:id="price" layoutX="403.0" layoutY="42.0"/>
+                        <Text layoutX="403.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+                        <TextField fx:id="pages" layoutX="17.0" layoutY="92.0"/>
+                        <Text layoutX="18.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
+                    </children>
+                </Pane>
+            </bottom>
+            <center>
+                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="50.0"
+                         BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="ru">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="614.0">
+                                    <children>
+                                        <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name ru"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author ru"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description ru"/>
+                                        <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                                        <TextField fx:id="editionRu" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition ru"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="en">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameEn" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorEn" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descEn" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name en"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author en"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description en"/>
+                                        <TextField fx:id="editionEn" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition en"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="fr">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameFr" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorFr" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descFr" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name fr"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author fr"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description fr"/>
+                                        <TextField fx:id="editionFr" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition fr"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="it">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameIt" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorIt" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descIt" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name it"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author it"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description it"/>
+                                        <TextField fx:id="editionIt" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition it"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="de">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameDe" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorDe" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descDe" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name de"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author de"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description de"/>
+                                        <TextField fx:id="editionDe" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition de"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="cs">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameCs" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorCs" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descCs" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name cs"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author cs"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description cs"/>
+                                        <TextField fx:id="editionCs" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition cs"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="desc" text="gr">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                    <children>
+                                        <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name gr"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author gr"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description gr"/>
+                                        <TextField fx:id="editionGr" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition gr"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

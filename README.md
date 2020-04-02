@@ -31,7 +31,7 @@ https://www.dev47apps.com/droidcam/connect/
 
 2) Editing a book
 - Click ‘’Deserialize’’
-- Select a file with the .hib extension 
+- Select a file with the .hibSerializerApp extension 
 - Make all the necessary changes.
 - Click on “Serialize” and select the path according to which the file will be saved
 
