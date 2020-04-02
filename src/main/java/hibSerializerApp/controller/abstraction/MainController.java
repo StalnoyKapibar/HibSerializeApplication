@@ -1,4 +1,4 @@
-package hibSerializerApp.controller;
+package hibSerializerApp.controller.abstraction;
 
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
@@ -8,7 +8,7 @@ public interface MainController extends Controller {
 
     void selectSearchDirectory(ViewController viewController, ActionEvent ae);
 
-    void searchHibFilesFromPath(ViewController viewController, ActionEvent ae);
+    void searchHibFilesFromPath(MainViewController viewController, ActionEvent ae);
 
     void getAvatarFromDisk(ViewController viewController, ActionEvent event);
 
@@ -18,7 +18,7 @@ public interface MainController extends Controller {
 
     void addAdditionalFromDisk(MainViewController viewController, ActionEvent event);
 
-    void addAdditionalFromWebCam(ViewController viewController, ActionEvent event);
+    void addAdditionalFromWebCam(MainViewController mainViewController, ActionEvent event);
 
     void deleteAdditional(ViewController viewController, ActionEvent event);
 
@@ -26,5 +26,5 @@ public interface MainController extends Controller {
 
     void cancel(ViewController viewController, ActionEvent event);
 
-    void deserialize(ViewController viewController, ActionEvent event);
+    void deserialize(MainViewController viewController, ActionEvent event);
 }
