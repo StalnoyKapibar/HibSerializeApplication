@@ -1,7 +1,8 @@
-package hibSerializerApp.serializer;
+package hibSerializerApp.dao;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hibSerializerApp.dao.abstraction.BookSerializer;
 import hibSerializerApp.model.Book;
 import hibSerializerApp.model.BookDTO;
 
@@ -10,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class BookJsonSerializer {
+public class BookJsonSerializer implements BookSerializer {
     private final ObjectMapper mapper;
 
     public BookJsonSerializer() {
