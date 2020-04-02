@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
             prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="hibSerializerApp.view.MainViewController">
+            fx:controller="hibSerializerApp.view.MainViewControllerImpl">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -32,31 +32,38 @@
         <BorderPane prefHeight="575.0" prefWidth="358.0" BorderPane.alignment="CENTER">
             <top>
                 <BorderPane prefHeight="81.0" prefWidth="358.0" BorderPane.alignment="CENTER">
-                    <left>
-                        <TextField fx:id="searchField" prefHeight="25.0" prefWidth="291.0"
-                                   BorderPane.alignment="CENTER"/>
-                    </left>
-                    <center>
-                        <Button mnemonicParsing="false" onAction="#selectSearchDirectory" prefHeight="25.0"
-                                prefWidth="0.0" BorderPane.alignment="CENTER"/>
-                    </center>
-                    <right>
-                        <Button mnemonicParsing="false" onAction="#searchHibFilesFromPath" prefHeight="25.0"
-                                prefWidth="57.0" text="Search" BorderPane.alignment="CENTER"/>
-                    </right>
                     <top>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Search .hibSerializerApp files in selected directory"
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search .hib files in selected directory"
                               wrappingWidth="288.333984375" BorderPane.alignment="CENTER">
                             <font>
                                 <Font size="18.0"/>
                             </font>
                         </Text>
                     </top>
+                    <center>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <center>
+                                <TextField fx:id="searchField" prefHeight="25.0" prefWidth="291.0"
+                                           BorderPane.alignment="CENTER"/>
+                            </center>
+                            <right>
+                                <Button mnemonicParsing="false" onAction="#selectSearchDirectory" prefHeight="25.0"
+                                        prefWidth="0.0" BorderPane.alignment="CENTER"/>
+                            </right>
+                            <left>
+                                <Pane prefHeight="57.0" prefWidth="16.0" BorderPane.alignment="CENTER"/>
+                            </left>
+                        </BorderPane>
+                    </center>
+                    <right>
+                        <Button mnemonicParsing="false" onAction="#searchHibFilesFromPath" prefHeight="25.0"
+                                prefWidth="57.0" text="Search" BorderPane.alignment="CENTER"/>
+                    </right>
                 </BorderPane>
             </top>
             <center>
-                <ListView fx:id="previewListView" prefHeight="437.0" prefWidth="358.0" BorderPane.alignment="CENTER"/>
+                <ListView fx:id="previewListView" onMouseClicked="#selectPreviewItem" prefHeight="437.0"
+                          prefWidth="358.0" BorderPane.alignment="CENTER"/>
             </center>
         </BorderPane>
     </left>
@@ -74,11 +81,11 @@
                                     </font>
                                 </Text>
                                 <Button layoutX="78.0" layoutY="433.0" mnemonicParsing="false"
-                                        onAction="#chooseAvatarFromDisk" text="from disk" textOverrun="CLIP"/>
+                                        onAction="#getAvatarFromDisk" text="from disk" textOverrun="CLIP"/>
                                 <ImageView fx:id="avatarImage" fitHeight="365.0" fitWidth="350.0" layoutX="78.0"
                                            layoutY="55.0" pickOnBounds="true" preserveRatio="true"/>
                                 <Button layoutX="348.0" layoutY="433.0" mnemonicParsing="false"
-                                        onAction="#chooseAvatarFromWebCam" text="make photo"/>
+                                        onAction="#getAvatarFromWebCam" text="make photo"/>
                                 <Button layoutX="443.0" layoutY="55.0" mnemonicParsing="false" onAction="#deleteAvatar"
                                         text="X"/>
                             </children>

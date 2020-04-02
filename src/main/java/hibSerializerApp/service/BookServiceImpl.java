@@ -1,16 +1,17 @@
 package hibSerializerApp.service;
 
+import hibSerializerApp.dao.BookJsonSerializer;
 import hibSerializerApp.model.Book;
 import hibSerializerApp.model.BookDTO;
-import hibSerializerApp.serializer.BookJsonSerializer;
+import hibSerializerApp.service.abstraction.BookService;
 
 import java.io.File;
 import java.io.IOException;
 
-public class BookService {
+public class BookServiceImpl implements BookService {
     private final BookJsonSerializer bookJsonSerializer;
 
-    public BookService() {
+    public BookServiceImpl() {
         this.bookJsonSerializer = new BookJsonSerializer();
     }
 

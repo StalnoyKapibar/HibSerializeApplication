@@ -4,17 +4,20 @@ import hibSerializerApp.HibSerializerApplication;
 import hibSerializerApp.model.Book;
 import hibSerializerApp.model.BookDTO;
 import hibSerializerApp.model.LocaleString;
-import hibSerializerApp.service.BookService;
+import hibSerializerApp.service.BookServiceImpl;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -29,11 +32,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 // TODO: Вынести логику в другие классы
-public class MainViewController {
+@Getter
+@Setter
+public class MainViewControllerOldImpl {
     private final FileChooser fileChooser;
     private final FileChooser hibFileChooser;
     private final DirectoryChooser directoryChooser;
-    private final BookService bookService;
+    private final BookServiceImpl bookServiceImpl;
+
     @FXML
     TextField pages;
     private byte[] avatar;
@@ -113,7 +119,7 @@ public class MainViewController {
     @FXML
     private TextField searchField;
 
-    public MainViewController() {
+    public MainViewControllerOldImpl() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("JPEG Files", "*.jpg")
@@ -131,7 +137,7 @@ public class MainViewController {
         authorLocale = new HashMap<>();
         descLocale = new HashMap<>();
         editionLocale = new HashMap<>();
-        bookService = new BookService();
+        bookServiceImpl = new BookServiceImpl();
     }
 
     @FXML
@@ -155,15 +161,14 @@ public class MainViewController {
         }
 
         for (File file : previewFiles) {
-            BookDTO bookDTO = bookService.getBookDTO(file);
+            BookDTO bookDTO = bookServiceImpl.getBookDTO(file);
             Text text = new Text();
             text.setText(" " + bookDTO.getAuthor().getEn() + " - " + bookDTO.getName().getEn());
             ImageView imageView = null;
             try {
                 if (bookDTO.getAvatar() != null) imageView = new ImageView(SwingFXUtils
                         .toFXImage((ImageIO.read(new ByteArrayInputStream(bookDTO.getAvatar()))), null));
-                else imageView = new ImageView(SwingFXUtils
-                        .toFXImage((ImageIO.read(new File("noImage.png"))), null));
+                else imageView = new ImageView(new Image("images/noImage.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -276,7 +281,7 @@ public class MainViewController {
         avatarImage.setImage(null);
         Book book = null;
         try {
-            book = bookService.getBook(hib);
+            book = bookServiceImpl.getBook(hib);
         } catch (IOException | ClassNotFoundException e) {
             showError(e);
             e.printStackTrace();
@@ -347,7 +352,7 @@ public class MainViewController {
         book.setAdditionalPhotos(additional);
         if (avatar != null) book.setAvatar(avatar);
         try {
-            bookService.saveBook(book, target);
+            bookServiceImpl.saveBook(book, target);
         } catch (IOException e) {
             showError(e);
             e.printStackTrace();
