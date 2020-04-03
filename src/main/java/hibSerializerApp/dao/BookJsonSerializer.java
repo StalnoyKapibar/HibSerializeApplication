@@ -31,7 +31,7 @@ public class BookJsonSerializer implements BookSerializer {
     public BookDTO getBookDTO(File file) {
         try {
             BookDTO result = mapper.readValue(file, BookDTO.class);
-            result.setLocation(file.getAbsolutePath());
+            result.setLocation(file);
             return result;
         } catch (IOException e) {
             throw new RuntimeException(e);

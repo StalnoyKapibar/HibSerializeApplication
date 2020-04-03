@@ -6,16 +6,15 @@ import javafx.scene.input.MouseEvent;
 
 public interface MainController extends Controller {
 
+    void searchHibFilesFromPath(MainViewController mainViewController, ActionEvent event);
 
-    void searchHibFilesFromPath(MainViewController viewController, ActionEvent ae);
-
-    void addAdditionalFromDisk(MainViewController viewController, ActionEvent event);
+    void addAdditionalFromDisk(MainViewController mainViewController, ActionEvent event);
 
     void addAdditionalFromWebCam(MainViewController mainViewController, ActionEvent event);
 
-    void serialize(MainViewController viewController, ActionEvent event);
+    void serialize(MainViewController mainViewController, ActionEvent event);
 
-    void deserialize(MainViewController viewController, ActionEvent event);
+    void deserialize(MainViewController mainViewController, ActionEvent event);
 
-    void selectPreviewItem(MainViewController viewController, MouseEvent mouseEvent);
+    void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent);
 }

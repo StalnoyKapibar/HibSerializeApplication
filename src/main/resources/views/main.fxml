@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import hibSerializerApp.model.*?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
-            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/8"
+            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="hibSerializerApp.view.MainViewControllerImpl">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -72,7 +74,7 @@
             <top>
                 <BorderPane prefHeight="487.0" prefWidth="1093.0" BorderPane.alignment="CENTER">
                     <left>
-                        <Pane prefHeight="487.0" prefWidth="506.0" BorderPane.alignment="CENTER">
+                        <Pane prefHeight="487.0" prefWidth="507.0" BorderPane.alignment="CENTER">
                             <children>
                                 <Text layoutX="156.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="Choose Cover Image">
@@ -116,24 +118,39 @@
             <bottom>
                 <Pane prefHeight="159.0" prefWidth="614.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="serializeBtn" layoutX="515.0" layoutY="121.0" mnemonicParsing="false"
+                        <Button fx:id="serializeBtn" layoutX="1011.0" layoutY="121.0" mnemonicParsing="false"
                                 onAction="#serialize" text="Serialize"/>
-                        <Button fx:id="cancelBtn" layoutX="19.0" layoutY="121.0" mnemonicParsing="false"
-                                onAction="#cancel" text="Cancel"/>
-                        <Button fx:id="deserializeBtn" layoutX="383.0" layoutY="121.0" mnemonicParsing="false"
+                        <Button fx:id="cancelBtn" layoutX="840.0" layoutY="121.0" mnemonicParsing="false"
+                                onAction="#cancel" text="Clear"/>
+                        <Button fx:id="deserializeBtn" layoutX="915.0" layoutY="121.0" mnemonicParsing="false"
                                 onAction="#deserialize" text="Deserialize"/>
                         <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
                         <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Year of edition"/>
-                        <TextField fx:id="price" layoutX="403.0" layoutY="42.0"/>
-                        <Text layoutX="403.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+                        <TextField fx:id="price" layoutX="209.0" layoutY="39.0"/>
+                        <Text layoutX="209.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
                         <TextField fx:id="pages" layoutX="17.0" layoutY="92.0"/>
                         <Text layoutX="18.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
+                        <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="39.0" prefWidth="150.0">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <Language fx:value="RU"/>
+                                    <Language fx:value="EN"/>
+                                    <Language fx:value="FR"/>
+                                    <Language fx:value="IT"/>
+                                    <Language fx:value="DE"/>
+                                    <Language fx:value="CS"/>
+                                    <Language fx:value="GR"/>
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                        <Text layoutX="400.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Original language"/>
                     </children>
                 </Pane>
             </bottom>
             <center>
-                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="50.0"
+                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="140.0"
                          BorderPane.alignment="CENTER">
                     <tabs>
                         <Tab text="ru">
@@ -142,7 +159,7 @@
                                     <children>
                                         <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name ru"/>
@@ -164,7 +181,7 @@
                                     <children>
                                         <TextField fx:id="nameEn" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorEn" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descEn" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descEn" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name en"/>
@@ -185,7 +202,7 @@
                                     <children>
                                         <TextField fx:id="nameFr" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorFr" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descFr" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descFr" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name fr"/>
@@ -206,7 +223,7 @@
                                     <children>
                                         <TextField fx:id="nameIt" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorIt" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descIt" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descIt" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name it"/>
@@ -227,7 +244,7 @@
                                     <children>
                                         <TextField fx:id="nameDe" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorDe" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descDe" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descDe" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name de"/>
@@ -248,7 +265,7 @@
                                     <children>
                                         <TextField fx:id="nameCs" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorCs" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descCs" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descCs" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name cs"/>
@@ -263,13 +280,13 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab fx:id="desc" text="gr">
+                        <Tab text="gr">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
                                     <children>
                                         <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0"/>
-                                        <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="100.0"
+                                        <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
                                                   prefWidth="350.0"/>
                                         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="name gr"/>

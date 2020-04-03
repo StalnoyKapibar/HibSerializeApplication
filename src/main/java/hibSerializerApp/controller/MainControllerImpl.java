@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import javax.imageio.ImageIO;
@@ -64,10 +65,12 @@ public class MainControllerImpl implements MainController {
         currentBook.setYearOfEdition(viewController.getTextFromField("year"));
         try {
             currentBook.setPages(Long.parseLong(viewController.getTextFromField("pages")));
-            currentBook.setPages(Long.parseLong(viewController.getTextFromField("price")));
+            currentBook.setPrice(Long.parseLong(viewController.getTextFromField("price")));
         } catch (NumberFormatException ignore) {
             //ignored
         }
+
+        currentBook.setOriginalLanguage(viewController.getLanguageFromChoiceBox());
 
         try {
             bookService.saveBook(currentBook, file);
@@ -93,7 +96,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent) {
         Integer index = mainViewController.getSelectedItemIndex("preview");
-        File file = new File(preview.get(index).getLocation());
+        File file = preview.get(index).getLocation();
         deserializeFromDisk(mainViewController, file);
     }
 
@@ -115,6 +118,7 @@ public class MainControllerImpl implements MainController {
             mainViewController.setTextInField("year", currentBook.getYearOfEdition());
             mainViewController.setTextInField("pages", currentBook.getPages().toString());
             mainViewController.setTextInField("price", currentBook.getPrice().toString());
+            mainViewController.setLanguageInChoiceBox(currentBook.getOriginalLanguage());
         } catch (NullPointerException ignored) {
             //ignored
         }
@@ -122,9 +126,11 @@ public class MainControllerImpl implements MainController {
         try {
             setAvatarImage(mainViewController, SwingFXUtils
                     .toFXImage(ImageIO.read(new ByteArrayInputStream(currentBook.getAvatar())), null));
-        } catch (IOException | NullPointerException e) {
+        } catch (IOException e) {
             mainViewController.showError(e);
             e.printStackTrace();
+        } catch (NullPointerException ignore) {
+            //ignored
         }
         mainViewController.clearListView("additional");
         addImagesToListView(mainViewController);
@@ -140,6 +146,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void searchHibFilesFromPath(MainViewController viewController, ActionEvent ae) {
         viewController.clearListView("preview");
+        preview.clear();
         String stringPath = viewController.getTextFromField("search");
         if (stringPath.equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -162,7 +169,14 @@ public class MainControllerImpl implements MainController {
             BookDTO bookDTO = bookService.getBookDTO(file);
             preview.add(bookDTO);
             Text text = new Text();
-            text.setText(" " + bookDTO.getAuthor().getEn() + " - " + bookDTO.getName().getEn());
+            String title = getOriginalLanguageTitle(viewController, bookDTO);
+            if (title != null) {
+                text.setText(title);
+            } else {
+                text.setFill(Color.RED);
+                text.setText("Original language not set" + "\n\n\n\n\n\n\n\n " + bookDTO.getLocation().getName());
+            }
+
             ImageView imageView = null;
             try {
                 if (bookDTO.getAvatar() != null) imageView = new ImageView(SwingFXUtils
@@ -278,6 +292,51 @@ public class MainControllerImpl implements MainController {
                 ImageIO.write(photo, "jpg", byteArrayOutputStream);
             }
             return byteArrayOutputStream.toByteArray();
+        }
+    }
+
+    private String getOriginalLanguageTitle(ViewController viewController, BookDTO book) {
+        try {
+            LocaleString name = book.getName();
+            LocaleString author = book.getAuthor();
+            String result;
+            if (book.getOriginalLanguage() == null) return null;
+            switch (book.getOriginalLanguage()) {
+                case RU:
+                    result = " " + author.getRu()
+                            + " - " + name.getRu() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case EN:
+                    result = " " + author.getEn()
+                            + " - " + name.getEn() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case FR:
+                    result = " " + author.getFr()
+                            + " - " + name.getFr() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case IT:
+                    result = " " + author.getIt()
+                            + " - " + name.getIt() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case DE:
+                    result = " " + author.getDe()
+                            + " - " + name.getDe() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case CS:
+                    result = " " + author.getCs()
+                            + " - " + name.getCs() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                case GR:
+                    result = " " + author.getGr()
+                            + " - " + name.getGr() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
+                default:
+                    throw new IllegalArgumentException(book.getOriginalLanguage().name() + " Not Found");
+            }
+            return result;
+        } catch (IllegalStateException e) {
+            viewController.showError(e);
+            return null;
         }
     }
 }

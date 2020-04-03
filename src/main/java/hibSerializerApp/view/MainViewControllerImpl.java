@@ -2,15 +2,13 @@ package hibSerializerApp.view;
 
 import hibSerializerApp.controller.MainControllerImpl;
 import hibSerializerApp.controller.abstraction.MainController;
+import hibSerializerApp.model.Language;
 import hibSerializerApp.model.LocaleString;
 import hibSerializerApp.view.abstraction.MainViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +28,9 @@ public class MainViewControllerImpl implements MainViewController {
     private final FileChooser hibFileChooser;
     private final DirectoryChooser directoryChooser;
     private final MainController mainController;
+
+    @FXML
+    private ChoiceBox<Language> languageBox;
     @FXML
     TextField pages;
     @FXML
@@ -191,6 +192,16 @@ public class MainViewControllerImpl implements MainViewController {
     }
 
     @Override
+    public Language getLanguageFromChoiceBox() {
+        return languageBox.getValue();
+    }
+
+    @Override
+    public void setLanguageInChoiceBox(Language language) {
+        languageBox.setValue(language);
+    }
+
+    @Override
     public File getImageFromFileChooser(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         File file = fileChooser.showOpenDialog(source.getScene().getWindow());
@@ -283,6 +294,7 @@ public class MainViewControllerImpl implements MainViewController {
         clearText(authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         clearText(descRu, descEn, descFr, descIt, descDe, descCs, descGr);
         clearText(editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
+        languageBox.setValue(null);
         price.setText("");
         year.setText("");
         pages.setText("");

@@ -1,5 +1,6 @@
 package hibSerializerApp.view.abstraction;
 
+import hibSerializerApp.model.Language;
 import hibSerializerApp.model.LocaleString;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
@@ -21,4 +22,8 @@ public interface MainViewController extends ViewController {
     File getHibFileFromDisk(ActionEvent event);
 
     void addPreviews(HBox hBox);
+
+    Language getLanguageFromChoiceBox();
+
+    void setLanguageInChoiceBox(Language language);
 }
