@@ -398,4 +398,8 @@ public class MainViewControllerImpl implements MainViewController {
     public void selectPreviewItem(MouseEvent mouseEvent) {
         mainController.selectPreviewItem(this, mouseEvent);
     }
+
+    public void createNewFile(ActionEvent event) {
+        mainController.createNewFile(this, event);
+    }
 }

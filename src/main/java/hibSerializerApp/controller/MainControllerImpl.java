@@ -9,6 +9,7 @@ import hibSerializerApp.service.BookServiceImpl;
 import hibSerializerApp.service.FileSystemServiceImpl;
 import hibSerializerApp.service.abstraction.BookService;
 import hibSerializerApp.service.abstraction.FileSystemService;
+import hibSerializerApp.view.MainViewControllerImpl;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
@@ -43,6 +44,7 @@ public class MainControllerImpl implements MainController {
     private final BookService bookService;
     private Book currentBook;
     private List<BookDTO> preview;
+    private File currentFile;
 
     private MainControllerImpl() {
         currentBook = new Book();
@@ -57,7 +59,6 @@ public class MainControllerImpl implements MainController {
     }
 
     public void serialize(MainViewController viewController, ActionEvent ae) {
-        File file = viewController.getPathForSaveHibFile(ae);
         currentBook.setName(new LocaleString(viewController.getLocaleRows("name")));
         currentBook.setAuthor(new LocaleString(viewController.getLocaleRows("author")));
         currentBook.setDesc(new LocaleString(viewController.getLocaleRows("desc")));
@@ -73,7 +74,7 @@ public class MainControllerImpl implements MainController {
         currentBook.setOriginalLanguage(viewController.getLanguageFromChoiceBox());
 
         try {
-            bookService.saveBook(currentBook, file);
+            bookService.saveBook(currentBook, currentFile);
         } catch (IOException e) {
             viewController.showError(e);
             e.printStackTrace();
@@ -101,7 +102,15 @@ public class MainControllerImpl implements MainController {
         deserializeFromDisk(mainViewController, file);
     }
 
+    @Override
+    public void createNewFile(MainViewControllerImpl mainViewController, ActionEvent event) {
+        currentFile = mainViewController.getPathForSaveHibFile(event);
+        cancel(mainViewController, event);
+    }
+
     private void deserializeFromDisk(MainViewController mainViewController, File file) {
+        currentFile = file;
+        mainViewController.clearAllRows();
         try {
             currentBook = bookService.getBook(file);
         } catch (IOException | ClassNotFoundException e) {
