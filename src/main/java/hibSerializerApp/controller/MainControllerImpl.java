@@ -78,6 +78,7 @@ public class MainControllerImpl implements MainController {
             viewController.showError(e);
             e.printStackTrace();
         }
+        searchHibFilesFromPath(viewController, ae);
     }
 
     @Override
