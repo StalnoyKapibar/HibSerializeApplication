@@ -28,6 +28,7 @@ public class MainViewControllerImpl implements MainViewController {
     private final FileChooser hibFileChooser;
     private final DirectoryChooser directoryChooser;
     private final MainController mainController;
+    public Button fileSelectBtn;
 
     @FXML
     private ChoiceBox<Language> languageBox;

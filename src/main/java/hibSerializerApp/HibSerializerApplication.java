@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 
@@ -26,7 +28,10 @@ public class HibSerializerApplication extends Application {
         stage.setOpacity(1);
         stage.setTitle("Make Photo");
         stage.getIcons().add(new Image("icon.png"));
-        stage.setScene(new Scene(root, 900, 690));
+        Scene scene = new Scene(root, 900, 690);
+        stage.setScene(scene);
+        JMetro jMetro = new JMetro(root, Style.LIGHT);
+        jMetro.setAutomaticallyColorPanes(true);
         stage.showAndWait();
         return fxmlLoader.getController();
     }
@@ -39,9 +44,11 @@ public class HibSerializerApplication extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("HIB serializer");
         stage.getIcons().add(new Image("icon.png"));
-//        primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        JMetro jMetro = new JMetro(root, Style.LIGHT);
+        jMetro.setAutomaticallyColorPanes(true);
+        stage.setScene(scene);
         stage.show();
     }
 }

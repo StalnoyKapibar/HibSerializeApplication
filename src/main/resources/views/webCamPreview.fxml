@@ -5,11 +5,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="690.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="690.0" prefWidth="900.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="hibSerializerApp.view.WebCamPreviewViewController">
     <bottom>
         <FlowPane fx:id="fpBottomPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="80.0"
-                  prefWidth="200.0" style="-fx-background-color:#ccc;">
+                  prefWidth="200.0" style="-fx-background-color: #fff;">
             <children>
                 <Button fx:id="btnStartCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                         onAction="#startCamera" prefHeight="50.0" prefWidth="190.0" text="Start Camera">
@@ -20,9 +21,8 @@
                 <Button fx:id="btnStopCamera" font="$x1" minHeight="-Infinity" minWidth="-Infinity"
                         mnemonicParsing="false" onAction="#stopCamera" prefHeight="50.0" prefWidth="190.0"
                         text="Stop Camera"/>
-                <Button fx:id="makeAPhoto" font="$x1" minHeight="-Infinity" minWidth="-Infinity"
-                        mnemonicParsing="false" onAction="#makeAPhoto" prefHeight="50.0" prefWidth="190.0"
-                        text="Make a photo"/>
+                <Button fx:id="makeAPhoto" font="$x1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                        onAction="#makeAPhoto" prefHeight="50.0" prefWidth="190.0" text="Make a photo"/>
             </children>
         </FlowPane>
     </bottom>
@@ -55,6 +55,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
+            <padding>
+                <Insets bottom="35.0"/>
+            </padding>
         </GridPane>
     </top>
 </BorderPane>

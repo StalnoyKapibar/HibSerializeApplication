@@ -48,6 +48,11 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jmetro</artifactId>
+            <version>8.6.9</version>
+        </dependency>
     </dependencies>
 
 </project>

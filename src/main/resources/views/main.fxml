@@ -32,8 +32,12 @@
                                            BorderPane.alignment="CENTER"/>
                             </center>
                             <right>
-                                <Button mnemonicParsing="false" onAction="#selectSearchDirectory" prefHeight="25.0"
-                                        prefWidth="0.0" BorderPane.alignment="CENTER"/>
+                                <Button fx:id="fileSelectBtn" mnemonicParsing="false" onAction="#selectSearchDirectory"
+                                        prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+                                    <BorderPane.margin>
+                                        <Insets left="5.0" right="5.0"/>
+                                    </BorderPane.margin>
+                                </Button>
                             </right>
                             <left>
                                 <Pane prefHeight="57.0" prefWidth="16.0" BorderPane.alignment="CENTER"/>
@@ -138,7 +142,7 @@
                 </Pane>
             </bottom>
             <center>
-                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="140.0"
+                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="110.0"
                          BorderPane.alignment="CENTER">
                     <tabs>
                         <Tab text="ru">
