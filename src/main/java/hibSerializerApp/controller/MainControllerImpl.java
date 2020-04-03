@@ -45,6 +45,7 @@ public class MainControllerImpl implements MainController {
     private Book currentBook;
     private List<BookDTO> preview;
     private File currentFile;
+    private Integer currentWebCam;
 
     private MainControllerImpl() {
         currentBook = new Book();
@@ -348,5 +349,13 @@ public class MainControllerImpl implements MainController {
             viewController.showError(e);
             return null;
         }
+    }
+
+    public Integer getCurrentWebCam() {
+        return currentWebCam;
+    }
+
+    public void setCurrentWebCam(Integer currentWebCam) {
+        this.currentWebCam = currentWebCam;
     }
 }

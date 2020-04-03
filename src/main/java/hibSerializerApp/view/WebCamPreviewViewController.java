@@ -1,11 +1,10 @@
 package hibSerializerApp.view;
 
 import com.github.sarxos.webcam.Webcam;
+import hibSerializerApp.controller.MainControllerImpl;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -50,7 +49,7 @@ public class WebCamPreviewViewController implements Initializable {
     private BufferedImage grabbedImage;
     private Webcam selWebCam = null;
     private boolean stopCamera = false;
-    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
+    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     private String cameraListPromptText = "Choose Camera";
 
     public void makeAPhoto(ActionEvent ae) {
@@ -71,7 +70,7 @@ public class WebCamPreviewViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
+        Integer currentWebCam = MainControllerImpl.getInstance().getCurrentWebCam();
         fpBottomPane.setDisable(true);
         ObservableList<WebCamInfo> options = FXCollections.observableArrayList();
         int webCamCounter = 0;
@@ -83,19 +82,22 @@ public class WebCamPreviewViewController implements Initializable {
             webCamCounter++;
         }
         cbCameraOptions.setItems(options);
-        cbCameraOptions.setPromptText(cameraListPromptText);
-        cbCameraOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<WebCamInfo>() {
-
-            @Override
-            public void changed(ObservableValue<? extends WebCamInfo> arg0, WebCamInfo arg1, WebCamInfo arg2) {
-                if (arg2 != null) {
-                    System.out.println("WebCam Index: " + arg2.getWebCamIndex() + ": WebCam Name:" + arg2.getWebCamName());
-                    initializeWebCam(arg2.getWebCamIndex());
-                }
+        if (currentWebCam == null) {
+            cbCameraOptions.setPromptText(cameraListPromptText);
+        } else {
+            cbCameraOptions.setPromptText(options.get(currentWebCam).webCamName);
+        }
+        cbCameraOptions.getSelectionModel().selectedItemProperty().addListener((arg01, arg11, arg2) -> {
+            if (arg2 != null) {
+                System.out.println("WebCam Index: " + arg2.getWebCamIndex() + ": WebCam Name:" + arg2.getWebCamName());
+                MainControllerImpl.getInstance().setCurrentWebCam(arg2.getWebCamIndex());
+                initializeWebCam(arg2.getWebCamIndex());
             }
         });
+        if (currentWebCam != null) {
+            initializeWebCam(currentWebCam);
+        }
         Platform.runLater(this::setImageViewSize);
-
     }
 
     protected void setImageViewSize() {
