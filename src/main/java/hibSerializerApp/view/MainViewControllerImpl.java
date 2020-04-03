@@ -175,7 +175,11 @@ public class MainViewControllerImpl implements MainViewController {
     public File getPathForSaveHibFile(ActionEvent event) {
         Node source = (Node) event.getSource();
         File file = hibFileChooser.showSaveDialog(source.getScene().getWindow());
-        hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        if (file.isDirectory()) {
+            hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        } else {
+            hibFileChooser.setInitialDirectory(file.getParentFile());
+        }
         return file;
     }
 
@@ -183,7 +187,11 @@ public class MainViewControllerImpl implements MainViewController {
     public File getHibFileFromDisk(ActionEvent event) {
         Node source = (Node) event.getSource();
         File file = hibFileChooser.showOpenDialog(source.getScene().getWindow());
-        hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        if (file.isDirectory()) {
+            hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        } else {
+            hibFileChooser.setInitialDirectory(file.getParentFile());
+        }
         return file;
     }
 
@@ -206,7 +214,11 @@ public class MainViewControllerImpl implements MainViewController {
     public File getImageFromFileChooser(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         File file = fileChooser.showOpenDialog(source.getScene().getWindow());
-        fileChooser.setInitialDirectory(file.getAbsoluteFile());
+        if (file.isDirectory()) {
+            hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        } else {
+            hibFileChooser.setInitialDirectory(file.getParentFile());
+        }
         return file;
     }
 
@@ -215,7 +227,11 @@ public class MainViewControllerImpl implements MainViewController {
         Node source = (Node) ae.getSource();
         List<File> files = fileChooser.showOpenMultipleDialog(source.getScene().getWindow());
         if (files.isEmpty()) return Collections.emptyList();
-        fileChooser.setInitialDirectory(files.get(0).getAbsoluteFile());
+        if (files.get(0).isDirectory()) {
+            hibFileChooser.setInitialDirectory(files.get(0).getAbsoluteFile());
+        } else {
+            hibFileChooser.setInitialDirectory(files.get(0).getParentFile());
+        }
         return files;
     }
 
@@ -224,8 +240,13 @@ public class MainViewControllerImpl implements MainViewController {
         Node source = (Node) ae.getSource();
         File file = directoryChooser.showDialog(source.getScene().getWindow());
         if (file == null) return null;
-        directoryChooser.setInitialDirectory(file.getAbsoluteFile());
-        hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        if (file.isDirectory()) {
+            directoryChooser.setInitialDirectory(file.getAbsoluteFile());
+            hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+        } else {
+            hibFileChooser.setInitialDirectory(file.getParentFile());
+            directoryChooser.setInitialDirectory(file.getParentFile());
+        }
         return file;
     }
 
