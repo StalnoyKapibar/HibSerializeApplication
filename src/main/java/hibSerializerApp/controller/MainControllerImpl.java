@@ -60,6 +60,9 @@ public class MainControllerImpl implements MainController {
     }
 
     public void serialize(MainViewController viewController, ActionEvent ae) {
+        if (currentFile == null) {
+            currentFile = viewController.getPathForSaveHibFile(ae);
+        }
         currentBook.setName(new LocaleString(viewController.getLocaleRows("name")));
         currentBook.setAuthor(new LocaleString(viewController.getLocaleRows("author")));
         currentBook.setDesc(new LocaleString(viewController.getLocaleRows("desc")));
@@ -80,12 +83,15 @@ public class MainControllerImpl implements MainController {
             viewController.showError(e);
             e.printStackTrace();
         }
-        searchHibFilesFromPath(viewController, ae);
+        if (!viewController.getTextFromField("search").equals("")) {
+            searchHibFilesFromPath(viewController, ae);
+        }
     }
 
     @Override
     public void cancel(ViewController viewController, ActionEvent event) {
         viewController.clearAllRows();
+        currentFile = null;
         currentBook = new Book();
         currentBook.setAdditionalPhotos(new ArrayList<>());
     }
@@ -106,6 +112,20 @@ public class MainControllerImpl implements MainController {
     @Override
     public void createNewFile(MainViewControllerImpl mainViewController, ActionEvent event) {
         currentFile = mainViewController.getPathForSaveHibFile(event);
+        cancel(mainViewController, event);
+    }
+
+    @Override
+    public void delete(MainViewControllerImpl mainViewController, ActionEvent event) {
+        try {
+            Files.delete(currentFile.toPath());
+        } catch (IOException e) {
+            mainViewController.showError(e);
+            e.printStackTrace();
+        }
+        if (!mainViewController.getTextFromField("search").equals("")) {
+            searchHibFilesFromPath(mainViewController, event);
+        }
         cancel(mainViewController, event);
     }
 

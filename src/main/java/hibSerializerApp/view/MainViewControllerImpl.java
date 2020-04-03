@@ -402,4 +402,8 @@ public class MainViewControllerImpl implements MainViewController {
     public void createNewFile(ActionEvent event) {
         mainController.createNewFile(this, event);
     }
+
+    public void delete(ActionEvent event) {
+        mainController.delete(this, event);
+    }
 }

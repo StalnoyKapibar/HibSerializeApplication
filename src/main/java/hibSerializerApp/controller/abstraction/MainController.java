@@ -20,4 +20,6 @@ public interface MainController extends Controller {
     void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent);
 
     void createNewFile(MainViewControllerImpl mainViewController, ActionEvent event);
+
+    void delete(MainViewControllerImpl mainViewController, ActionEvent event);
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
-            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/8"
+            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="hibSerializerApp.view.MainViewControllerImpl">
     <left>
         <BorderPane prefHeight="575.0" prefWidth="358.0" BorderPane.alignment="CENTER">
@@ -101,11 +101,11 @@
             <bottom>
                 <Pane prefHeight="159.0" prefWidth="614.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="serializeBtn" layoutX="453.0" layoutY="92.0" mnemonicParsing="false"
+                        <Button fx:id="serializeBtn" layoutX="509.0" layoutY="92.0" mnemonicParsing="false"
                                 onAction="#serialize" text="Save"/>
                         <Button fx:id="cancelBtn" layoutX="209.0" layoutY="92.0" mnemonicParsing="false"
                                 onAction="#cancel" text="Clear"/>
-                        <Button fx:id="deserializeBtn" layoutX="283.0" layoutY="92.0" mnemonicParsing="false"
+                        <Button fx:id="deserializeBtn" layoutX="312.0" layoutY="92.0" mnemonicParsing="false"
                                 onAction="#deserialize" text="Open"/>
                         <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
                         <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
@@ -117,7 +117,7 @@
 
                         <Text layoutX="400.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Original language"/>
-                        <Button layoutX="380.0" layoutY="92.0" mnemonicParsing="false" onAction="#createNewFile"
+                        <Button layoutX="400.0" layoutY="92.0" mnemonicParsing="false" onAction="#createNewFile"
                                 text="New"/>
                         <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="39.0" prefWidth="150.0">
                             <items>
@@ -132,6 +132,8 @@
                                 </FXCollections>
                             </items>
                         </ChoiceBox>
+                        <Button layoutX="1023.0" layoutY="92.0" mnemonicParsing="false" onAction="#delete"
+                                text="Delete"/>
                     </children>
                 </Pane>
             </bottom>
