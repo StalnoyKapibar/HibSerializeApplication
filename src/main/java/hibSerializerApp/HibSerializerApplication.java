@@ -16,6 +16,10 @@ import java.io.IOException;
 
 public class HibSerializerApplication extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     public static WebCamPreviewViewController startWebCamModal(Style style) {
         FXMLLoader fxmlLoader = new FXMLLoader(HibSerializerApplication.class.getResource("/views/webCamPreview.fxml"));
         Parent root = null;
@@ -56,10 +60,6 @@ public class HibSerializerApplication extends Application {
         jMetro.setAutomaticallyColorPanes(true);
         stage.showAndWait();
         return fxmlLoader.getController();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     public static void startWithLightMode(Stage stage) {
