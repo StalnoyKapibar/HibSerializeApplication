@@ -7,6 +7,7 @@ import hibSerializerApp.model.LocaleString;
 import hibSerializerApp.view.abstraction.MainViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -16,21 +17,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import jfxtras.styles.jmetro.MDL2IconFont;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URL;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class MainViewControllerImpl implements MainViewController {
+public class MainViewControllerImpl implements MainViewController, Initializable {
     private final FileChooser fileChooser;
     private final FileChooser hibFileChooser;
     private final DirectoryChooser directoryChooser;
     private final MainController mainController;
     public Button fileSelectBtn;
     public Text currentDir;
+    public Button searchButton;
 
     @FXML
     private ChoiceBox<Language> languageBox;
@@ -443,5 +444,10 @@ public class MainViewControllerImpl implements MainViewController {
 
     public void enableLightMode(ActionEvent event) {
         mainController.enableLightMode(this, event);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        searchButton.setGraphic(new MDL2IconFont("\uE721"));
     }
 }
