@@ -66,7 +66,6 @@ public class HibSerializerApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Scene scene = new Scene(root);
         JMetro jMetro = new JMetro(root, Style.DARK);
         root.getStylesheets().add("/css/dark-theme.css");
