@@ -101,26 +101,18 @@ public class MainControllerImpl implements MainController {
 
     @Override
     public void enableNightMode(MainViewController mainViewController, ActionEvent event) {
-        String stringPath = mainViewController.getTextFromField("search");
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
         HibSerializerApplication.startWithDarkMode(stage);
-        mainViewController.setTextInField("search", stringPath);
-        searchHibFilesFromPath(mainViewController, event);
-        deserializeFromDisk(mainViewController, currentFile);
     }
 
     @Override
     public void enableLightMode(MainViewController mainViewController, ActionEvent event) {
-        String stringPath = mainViewController.getTextFromField("search");
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
         HibSerializerApplication.startWithLightMode(stage);
-        mainViewController.setTextInField("search", stringPath);
-        searchHibFilesFromPath(mainViewController, event);
-        deserializeFromDisk(mainViewController, currentFile);
     }
 
     @Override
@@ -138,9 +130,9 @@ public class MainControllerImpl implements MainController {
 
     @Override
     public void createNewFile(MainViewController mainViewController, ActionEvent event) {
+        cancel(mainViewController, event);
         currentFile = mainViewController.getPathForSaveHibFile(event);
         mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
-        cancel(mainViewController, event);
     }
 
     @Override

@@ -84,7 +84,7 @@
                                       style="-fx-background-color: #dcdcdc;">
                                     <children>
                                         <ImageView fx:id="avatarImage" fitHeight="392.0" fitWidth="301.0"
-                                                   layoutX="-14.0" pickOnBounds="true" preserveRatio="true"/>
+                                                   pickOnBounds="true" preserveRatio="true"/>
                                     </children>
                                 </Pane>
                                 <Button layoutX="6.0" layoutY="448.0" maxWidth="124.0" minWidth="124.0"
