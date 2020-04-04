@@ -40,15 +40,43 @@ public class HibSerializerApplication extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    public static void startWithLightMode(Stage stage) {
         stage.setTitle("HIB serializer");
         stage.getIcons().add(new Image("icon.png"));
-        Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(HibSerializerApplication.class.getResource("/views/main.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scene scene = new Scene(root);
         JMetro jMetro = new JMetro(root, Style.LIGHT);
         jMetro.setAutomaticallyColorPanes(true);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void startWithDarkMode(Stage stage) {
+        stage.setTitle("HIB serializer");
+        stage.getIcons().add(new Image("icon.png"));
+        Parent root = null;
+
+        try {
+            root = FXMLLoader.load(HibSerializerApplication.class.getResource("/views/main-dark.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root);
+        JMetro jMetro = new JMetro(root, Style.DARK);
+        root.getStylesheets().add("/css/dark-theme.css");
+        jMetro.setAutomaticallyColorPanes(true);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        startWithLightMode(stage);
     }
 }

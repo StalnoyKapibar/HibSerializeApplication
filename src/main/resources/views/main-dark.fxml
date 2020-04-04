@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import hibSerializerApp.model.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
+            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="hibSerializerApp.view.MainViewControllerImpl">
+    <left>
+        <BorderPane prefHeight="575.0" prefWidth="358.0" BorderPane.alignment="CENTER">
+            <top>
+                <BorderPane prefHeight="81.0" prefWidth="358.0" BorderPane.alignment="CENTER">
+                    <top>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search .hib files in selected directory"
+                              wrappingWidth="288.333984375" BorderPane.alignment="CENTER">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                            <BorderPane.margin>
+                                <Insets top="10.0"/>
+                            </BorderPane.margin>
+                        </Text>
+                    </top>
+                    <center>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <center>
+                                <TextField fx:id="searchField" prefHeight="25.0" prefWidth="291.0"
+                                           BorderPane.alignment="CENTER">
+                                    <BorderPane.margin>
+                                        <Insets left="20.0"/>
+                                    </BorderPane.margin>
+                                </TextField>
+                            </center>
+                            <right>
+                                <Button fx:id="fileSelectBtn" mnemonicParsing="false" onAction="#selectSearchDirectory"
+                                        prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+                                    <BorderPane.margin>
+                                        <Insets left="5.0" right="5.0"/>
+                                    </BorderPane.margin>
+                                </Button>
+                            </right>
+                            <left>
+                                <Pane prefHeight="57.0" prefWidth="16.0" BorderPane.alignment="CENTER"/>
+                            </left>
+                        </BorderPane>
+                    </center>
+                    <right>
+                        <Button mnemonicParsing="false" onAction="#searchHibFilesFromPath" prefHeight="25.0"
+                                prefWidth="57.0" text="Search" BorderPane.alignment="CENTER"/>
+                    </right>
+                </BorderPane>
+            </top>
+            <center>
+                <ListView fx:id="previewListView" onMouseClicked="#selectPreviewItem" prefHeight="437.0"
+                          prefWidth="358.0" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="36.0" top="10.0"/>
+                    </BorderPane.margin>
+                </ListView>
+            </center>
+        </BorderPane>
+    </left>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #252525;"
+                    BorderPane.alignment="CENTER">
+            <top>
+                <BorderPane prefHeight="487.0" prefWidth="1093.0" BorderPane.alignment="CENTER">
+                    <left>
+                        <Pane prefHeight="487.0" prefWidth="507.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Text layoutX="74.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Choose Cover Image">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Text>
+                                <Button layoutX="307.0" layoutY="48.0" mnemonicParsing="false" onAction="#deleteAvatar"
+                                        style="-fx-background-color: #252525;" text="X"/>
+                                <Pane layoutX="6.0" layoutY="48.0" prefHeight="392.0" prefWidth="301.0"
+                                      style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <ImageView fx:id="avatarImage" fitHeight="392.0" fitWidth="301.0"
+                                                   layoutX="-14.0" pickOnBounds="true" preserveRatio="true"/>
+                                    </children>
+                                </Pane>
+                                <Button layoutX="6.0" layoutY="448.0" maxWidth="124.0" minWidth="124.0"
+                                        mnemonicParsing="false" onAction="#getAvatarFromDisk" text="From disk"
+                                        textOverrun="CLIP"/>
+                                <Button layoutX="183.0" layoutY="448.0" maxWidth="124.0" minWidth="124.0"
+                                        mnemonicParsing="false" onAction="#getAvatarFromWebCam" text="Make photo"/>
+                            </children>
+                            <BorderPane.margin>
+                                <Insets left="35.0"/>
+                            </BorderPane.margin>
+                        </Pane>
+                    </left>
+                    <right>
+                        <Pane prefHeight="487.0" prefWidth="564.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Button layoutX="87.0" layoutY="450.0" minWidth="124.0" mnemonicParsing="false"
+                                        onAction="#addAdditionalFromDisk" text="From disk"/>
+                                <Button layoutX="353.0" layoutY="450.0" minWidth="124.0" mnemonicParsing="false"
+                                        onAction="#addAdditionalFromWebCam" text="Make photo"/>
+                                <Text layoutX="253.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Add photo">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Text>
+                                <ListView fx:id="additionalListView" layoutX="87.0" layoutY="48.0" prefHeight="392.0"
+                                          prefWidth="390.0" style="-fx-background-color: #2d2d2d;"/>
+                                <Button layoutX="477.0" layoutY="48.0" mnemonicParsing="false"
+                                        onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0"
+                                        style="-fx-background-color: #252525;" text="X"/>
+                                <Button layoutX="431.0" layoutY="11.0" minWidth="124.0" mnemonicParsing="false"
+                                        onAction="#enableLightMode"
+                                        style="-fx-background-color: #2d2d2d; -fx-text-fill: #fff;" text="Light Mode"/>
+                            </children>
+                        </Pane>
+                    </right>
+                </BorderPane>
+            </top>
+            <bottom>
+                <Pane prefHeight="136.0" prefWidth="1099.0" style="-fx-background-color: #2d2d2d;"
+                      BorderPane.alignment="CENTER">
+                    <children>
+                        <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
+                        <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Year of edition"/>
+                        <TextField fx:id="price" layoutX="209.0" layoutY="41.0"/>
+                        <Text layoutX="209.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+                        <TextField fx:id="pages" layoutX="17.0" layoutY="92.0"/>
+                        <Text layoutX="18.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
+                        <Text layoutX="400.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Original language"/>
+                        <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="39.0" prefWidth="150.0">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <Language fx:value="RU"/>
+                                    <Language fx:value="EN"/>
+                                    <Language fx:value="FR"/>
+                                    <Language fx:value="IT"/>
+                                    <Language fx:value="DE"/>
+                                    <Language fx:value="CS"/>
+                                    <Language fx:value="GR"/>
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="35.0" right="36.0"/>
+                    </BorderPane.margin>
+                </Pane>
+            </bottom>
+            <center>
+                <TabPane prefHeight="250.0" prefWidth="855.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="70.0"
+                         BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="RU">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="614.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descRu" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name ru"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author ru"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description ru"/>
+                                        <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                                        <TextField fx:id="editionRu" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition ru"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="EN">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameEn" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorEn" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descEn" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name en"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author en"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description en"/>
+                                        <TextField fx:id="editionEn" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition en"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="FR">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameFr" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorFr" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descFr" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name fr"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author fr"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description fr"/>
+                                        <TextField fx:id="editionFr" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition fr"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="IT">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameIt" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorIt" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descIt" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name it"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author it"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description it"/>
+                                        <TextField fx:id="editionIt" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition it"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="DE">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameDe" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorDe" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descDe" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name de"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author de"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description de"/>
+                                        <TextField fx:id="editionDe" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition de"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="CS">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameCs" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorCs" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descCs" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name cs"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author cs"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description cs"/>
+                                        <TextField fx:id="editionCs" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition cs"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="GR">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #2d2d2d;">
+                                    <children>
+                                        <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0"/>
+                                        <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0"/>
+                                        <TextArea fx:id="descGr" layoutX="200.0" layoutY="29.0" prefHeight="152.0"
+                                                  prefWidth="350.0"/>
+                                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="name gr"/>
+                                        <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="author gr"/>
+                                        <Text layoutX="200.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="description gr"/>
+                                        <TextField fx:id="editionGr" layoutX="14.0" layoutY="155.0"/>
+                                        <Text layoutX="14.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="edition gr"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                    <BorderPane.margin>
+                        <Insets left="35.0"/>
+                    </BorderPane.margin>
+                </TabPane>
+            </center>
+            <right>
+                <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2d2d2d;"
+                      BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="cancelBtn" layoutX="38.0" layoutY="44.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#cancel" text="Clear"/>
+                        <Button fx:id="deserializeBtn" layoutX="38.0" layoutY="82.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#deserialize" text="Open"/>
+                        <Button layoutX="38.0" layoutY="122.0" maxWidth="50.0" minWidth="124.0" mnemonicParsing="false"
+                                onAction="#createNewFile" text="New"/>
+                        <Button fx:id="serializeBtn" layoutX="38.0" layoutY="160.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#serialize" text="Save"/>
+
+                        <Button layoutX="38.0" layoutY="211.0" minWidth="124.0" mnemonicParsing="false"
+                                onAction="#delete" style="-fx-border-width: 0.5; -fx-text-fill: red;" text="Delete"/>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets right="36.0"/>
+                    </BorderPane.margin>
+                </Pane>
+            </right>
+        </BorderPane>
+    </center>
+    <bottom>
+        <Text fx:id="currentDir" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="5.0"/>
+            </BorderPane.margin>
+        </Text>
+    </bottom>
+</BorderPane>

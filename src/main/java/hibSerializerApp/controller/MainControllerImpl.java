@@ -9,12 +9,12 @@ import hibSerializerApp.service.BookServiceImpl;
 import hibSerializerApp.service.FileSystemServiceImpl;
 import hibSerializerApp.service.abstraction.BookService;
 import hibSerializerApp.service.abstraction.FileSystemService;
-import hibSerializerApp.view.MainViewControllerImpl;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -62,6 +63,7 @@ public class MainControllerImpl implements MainController {
     public void serialize(MainViewController viewController, ActionEvent ae) {
         if (currentFile == null) {
             currentFile = viewController.getPathForSaveHibFile(ae);
+            viewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         }
         currentBook.setName(new LocaleString(viewController.getLocaleRows("name")));
         currentBook.setAuthor(new LocaleString(viewController.getLocaleRows("author")));
@@ -92,8 +94,33 @@ public class MainControllerImpl implements MainController {
     public void cancel(ViewController viewController, ActionEvent event) {
         viewController.clearAllRows();
         currentFile = null;
+        viewController.setTextInField("currentDir", "");
         currentBook = new Book();
         currentBook.setAdditionalPhotos(new ArrayList<>());
+    }
+
+    @Override
+    public void enableNightMode(MainViewController mainViewController, ActionEvent event) {
+        String stringPath = mainViewController.getTextFromField("search");
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+        HibSerializerApplication.startWithDarkMode(stage);
+        mainViewController.setTextInField("search", stringPath);
+        searchHibFilesFromPath(mainViewController, event);
+        deserializeFromDisk(mainViewController, currentFile);
+    }
+
+    @Override
+    public void enableLightMode(MainViewController mainViewController, ActionEvent event) {
+        String stringPath = mainViewController.getTextFromField("search");
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+        HibSerializerApplication.startWithLightMode(stage);
+        mainViewController.setTextInField("search", stringPath);
+        searchHibFilesFromPath(mainViewController, event);
+        deserializeFromDisk(mainViewController, currentFile);
     }
 
     @Override
@@ -110,13 +137,14 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void createNewFile(MainViewControllerImpl mainViewController, ActionEvent event) {
+    public void createNewFile(MainViewController mainViewController, ActionEvent event) {
         currentFile = mainViewController.getPathForSaveHibFile(event);
+        mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         cancel(mainViewController, event);
     }
 
     @Override
-    public void delete(MainViewControllerImpl mainViewController, ActionEvent event) {
+    public void delete(MainViewController mainViewController, ActionEvent event) {
         try {
             Files.delete(currentFile.toPath());
         } catch (IOException e) {
@@ -132,6 +160,7 @@ public class MainControllerImpl implements MainController {
     private void deserializeFromDisk(MainViewController mainViewController, File file) {
         currentFile = file;
         mainViewController.clearAllRows();
+        mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         try {
             currentBook = bookService.getBook(file);
         } catch (IOException | ClassNotFoundException e) {

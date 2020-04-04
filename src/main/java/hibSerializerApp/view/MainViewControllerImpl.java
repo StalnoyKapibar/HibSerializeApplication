@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -29,6 +30,7 @@ public class MainViewControllerImpl implements MainViewController {
     private final DirectoryChooser directoryChooser;
     private final MainController mainController;
     public Button fileSelectBtn;
+    public Text currentDir;
 
     @FXML
     private ChoiceBox<Language> languageBox;
@@ -285,6 +287,8 @@ public class MainViewControllerImpl implements MainViewController {
             price.setText(text);
         } else if (name.equals("search")) {
             searchField.setText(text);
+        } else if (name.equals("currentDir")) {
+            currentDir.setText(text);
         } else {
             throw new IllegalArgumentException("Nonexistent name " + name);
         }
@@ -316,6 +320,7 @@ public class MainViewControllerImpl implements MainViewController {
         clearText(authorRu, authorEn, authorFr, authorIt, authorDe, authorCs, authorGr);
         clearText(descRu, descEn, descFr, descIt, descDe, descCs, descGr);
         clearText(editionRu, editionEn, editionFr, editionIt, editionDe, editionCs, editionGr);
+        currentDir.setText("");
         languageBox.setValue(null);
         price.setText("");
         year.setText("");
@@ -427,5 +432,13 @@ public class MainViewControllerImpl implements MainViewController {
 
     public void delete(ActionEvent event) {
         mainController.delete(this, event);
+    }
+
+    public void enableNightMode(ActionEvent event) {
+        mainController.enableNightMode(this, event);
+    }
+
+    public void enableLightMode(ActionEvent event) {
+        mainController.enableLightMode(this, event);
     }
 }

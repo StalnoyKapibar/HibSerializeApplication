@@ -1,6 +1,5 @@
 package hibSerializerApp.controller.abstraction;
 
-import hibSerializerApp.view.MainViewControllerImpl;
 import hibSerializerApp.view.abstraction.MainViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
@@ -19,7 +18,11 @@ public interface MainController extends Controller {
 
     void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent);
 
-    void createNewFile(MainViewControllerImpl mainViewController, ActionEvent event);
+    void createNewFile(MainViewController mainViewController, ActionEvent event);
 
-    void delete(MainViewControllerImpl mainViewController, ActionEvent event);
+    void delete(MainViewController mainViewController, ActionEvent event);
+
+    void enableNightMode(MainViewController viewController, ActionEvent event);
+
+    void enableLightMode(MainViewController viewController, ActionEvent event);
 }
