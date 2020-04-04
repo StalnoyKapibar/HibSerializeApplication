@@ -1,10 +1,15 @@
 package hibSerializerApp.controller.abstraction;
 
 import hibSerializerApp.view.abstraction.MainViewController;
+import hibSerializerApp.view.abstraction.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
+
 public interface MainController extends Controller {
+
+    void deserializeFromDisk(MainViewController mainViewController, File file);
 
     void searchHibFilesFromPath(MainViewController mainViewController, ActionEvent event);
 
@@ -18,6 +23,8 @@ public interface MainController extends Controller {
 
     void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent);
 
+    void selectPreviewItemAction(MainViewController mainViewController, MouseEvent mouseEvent);
+
     void createNewFile(MainViewController mainViewController, ActionEvent event);
 
     void delete(MainViewController mainViewController, ActionEvent event);
@@ -25,4 +32,10 @@ public interface MainController extends Controller {
     void enableNightMode(MainViewController viewController, ActionEvent event);
 
     void enableLightMode(MainViewController viewController, ActionEvent event);
+
+    void clear(ViewController viewController, ActionEvent event);
+
+    void cancel(MainViewController MainViewController, ActionEvent event);
+
+    void createNew(MainViewController mainViewController, ActionEvent event);
 }

@@ -13,6 +13,4 @@ public interface Controller {
     void deleteAvatar(ViewController viewController, ActionEvent event);
 
     void deleteAdditional(ViewController viewController, ActionEvent event);
-
-    void cancel(ViewController viewController, ActionEvent event);
 }

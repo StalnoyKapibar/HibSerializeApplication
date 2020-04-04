@@ -9,6 +9,7 @@ import hibSerializerApp.service.BookServiceImpl;
 import hibSerializerApp.service.FileSystemServiceImpl;
 import hibSerializerApp.service.abstraction.BookService;
 import hibSerializerApp.service.abstraction.FileSystemService;
+import hibSerializerApp.view.SaveModalViewController;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
@@ -23,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.Style;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -43,13 +45,16 @@ public class MainControllerImpl implements MainController {
     private static MainControllerImpl instance = new MainControllerImpl();
     private final FileSystemService fileSystemService;
     private final BookService bookService;
+    private Book originalBook;
     private Book currentBook;
     private List<BookDTO> preview;
     private File currentFile;
     private Integer currentWebCam;
+    private Style currentStyle = Style.LIGHT;
 
     private MainControllerImpl() {
         currentBook = new Book();
+        originalBook = new Book();
         currentBook.setAdditionalPhotos(new ArrayList<>());
         preview = new ArrayList<>();
         fileSystemService = new FileSystemServiceImpl();
@@ -63,22 +68,10 @@ public class MainControllerImpl implements MainController {
     public void serialize(MainViewController viewController, ActionEvent ae) {
         if (currentFile == null) {
             currentFile = viewController.getPathForSaveHibFile(ae);
+            if (currentFile == null) return;
             viewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         }
-        currentBook.setName(new LocaleString(viewController.getLocaleRows("name")));
-        currentBook.setAuthor(new LocaleString(viewController.getLocaleRows("author")));
-        currentBook.setDesc(new LocaleString(viewController.getLocaleRows("desc")));
-        currentBook.setEdition(new LocaleString(viewController.getLocaleRows("edition")));
-        currentBook.setYearOfEdition(viewController.getTextFromField("year"));
-        try {
-            currentBook.setPages(Long.parseLong(viewController.getTextFromField("pages")));
-            currentBook.setPrice(Long.parseLong(viewController.getTextFromField("price")));
-        } catch (NumberFormatException ignore) {
-            //ignored
-        }
-
-        currentBook.setOriginalLanguage(viewController.getLanguageFromChoiceBox());
-
+        collectCurrentBook(viewController, ae);
         try {
             bookService.saveBook(currentBook, currentFile);
         } catch (IOException e) {
@@ -91,16 +84,37 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void cancel(ViewController viewController, ActionEvent event) {
-        viewController.clearAllRows();
-        currentFile = null;
-        viewController.setTextInField("currentDir", "");
-        currentBook = new Book();
-        currentBook.setAdditionalPhotos(new ArrayList<>());
+    public void cancel(MainViewController mainViewController, ActionEvent event) {
+        startSaveModal(e -> e.clear(mainViewController, event), mainViewController, event);
+    }
+
+    @Override
+    public void createNew(MainViewController mainViewController, ActionEvent event) {
+        clear(mainViewController, event);
+        currentFile = mainViewController.getPathForSaveHibFile(event);
+        if (currentFile == null) return;
+        mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
+    }
+
+    private void collectCurrentBook(MainViewController mainViewController, ActionEvent event) {
+        currentBook.setName(new LocaleString(mainViewController.getLocaleRows("name")));
+        currentBook.setAuthor(new LocaleString(mainViewController.getLocaleRows("author")));
+        currentBook.setDesc(new LocaleString(mainViewController.getLocaleRows("desc")));
+        currentBook.setEdition(new LocaleString(mainViewController.getLocaleRows("edition")));
+        currentBook.setYearOfEdition(mainViewController.getTextFromField("year"));
+        try {
+            currentBook.setPages(Long.parseLong(mainViewController.getTextFromField("pages")));
+            currentBook.setPrice(Long.parseLong(mainViewController.getTextFromField("price")));
+        } catch (NumberFormatException ignore) {
+            //ignored
+        }
+
+        currentBook.setOriginalLanguage(mainViewController.getLanguageFromChoiceBox());
     }
 
     @Override
     public void enableNightMode(MainViewController mainViewController, ActionEvent event) {
+        currentStyle = Style.DARK;
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
@@ -109,6 +123,7 @@ public class MainControllerImpl implements MainController {
 
     @Override
     public void enableLightMode(MainViewController mainViewController, ActionEvent event) {
+        currentStyle = Style.LIGHT;
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
@@ -116,13 +131,29 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
+    public void clear(ViewController viewController, ActionEvent event) {
+        viewController.clearAllRows();
+        currentFile = null;
+        viewController.setTextInField("currentDir", "");
+        currentBook = new Book();
+        originalBook = new Book();
+        currentBook.setAdditionalPhotos(new ArrayList<>());
+    }
+
+    @Override
     public void deserialize(MainViewController mainViewController, ActionEvent event) {
         File file = mainViewController.getHibFileFromDisk(event);
+        startSaveModal(e -> e.deserializeFromDisk(mainViewController, file), mainViewController, event);
         deserializeFromDisk(mainViewController, file);
     }
 
     @Override
-    public void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent) {
+    public void selectPreviewItem(MainViewController mainViewController, MouseEvent me) {
+        selectPreviewItemAction(mainViewController, me);
+    }
+
+    @Override
+    public void selectPreviewItemAction(MainViewController mainViewController, MouseEvent mouseEvent) {
         Integer index = mainViewController.getSelectedItemIndex("preview");
         if (index < 0) return;
         File file = preview.get(index).getLocation();
@@ -131,14 +162,14 @@ public class MainControllerImpl implements MainController {
 
     @Override
     public void createNewFile(MainViewController mainViewController, ActionEvent event) {
-        cancel(mainViewController, event);
-        currentFile = mainViewController.getPathForSaveHibFile(event);
-        mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
+        startSaveModal(e -> e.createNew(mainViewController, event), mainViewController, event);
     }
+
 
     @Override
     public void delete(MainViewController mainViewController, ActionEvent event) {
         try {
+            if (currentFile == null) return;
             Files.delete(currentFile.toPath());
         } catch (IOException e) {
             mainViewController.showError(e);
@@ -147,15 +178,22 @@ public class MainControllerImpl implements MainController {
         if (!mainViewController.getTextFromField("search").equals("")) {
             searchHibFilesFromPath(mainViewController, event);
         }
-        cancel(mainViewController, event);
+        clear(mainViewController, event);
     }
 
-    private void deserializeFromDisk(MainViewController mainViewController, File file) {
+    @Override
+    public void deserializeFromDisk(MainViewController mainViewController, File file) {
         currentFile = file;
+        if (file == null) return;
         mainViewController.clearAllRows();
         mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         try {
             currentBook = bookService.getBook(file);
+            try {
+                originalBook = currentBook.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         } catch (IOException | ClassNotFoundException e) {
             mainViewController.showError(e);
             e.printStackTrace();
@@ -339,7 +377,7 @@ public class MainControllerImpl implements MainController {
     }
 
     private byte[] getPhotoFromWebCam(ActionEvent ae) throws IOException {
-        WebCamPreviewViewController controller = HibSerializerApplication.startWebCamModal();
+        WebCamPreviewViewController controller = HibSerializerApplication.startWebCamModal(currentStyle);
         controller.stopCamera(ae);
         BufferedImage photo = controller.getPhoto();
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
@@ -392,6 +430,25 @@ public class MainControllerImpl implements MainController {
         } catch (IllegalStateException e) {
             viewController.showError(e);
             return null;
+        }
+    }
+
+    private void startSaveModal(Action actionDontSave,
+                                MainViewController mainViewController,
+                                ActionEvent actionEvent) {
+        collectCurrentBook(mainViewController, actionEvent);
+        if (!currentBook.equals(originalBook) && currentFile != null) {
+            SaveModalViewController saveModalViewController = HibSerializerApplication
+                    .startSaveModal(currentStyle);
+            if (saveModalViewController.getSave() != null) {
+                if (saveModalViewController.getSave()) {
+                    this.serialize(mainViewController, actionEvent);
+                } else {
+                    actionDontSave.doAction(this);
+                }
+            }
+        } else {
+            actionDontSave.doAction(this);
         }
     }
 

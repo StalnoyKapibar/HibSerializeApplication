@@ -177,6 +177,7 @@ public class MainViewControllerImpl implements MainViewController {
     public File getPathForSaveHibFile(ActionEvent event) {
         Node source = (Node) event.getSource();
         File file = hibFileChooser.showSaveDialog(source.getScene().getWindow());
+        if (file == null) return null;
         if (file.isDirectory()) {
             hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
         } else {

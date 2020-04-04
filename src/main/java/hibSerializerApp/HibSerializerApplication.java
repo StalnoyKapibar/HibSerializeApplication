@@ -1,5 +1,6 @@
 package hibSerializerApp;
 
+import hibSerializerApp.view.SaveModalViewController;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 public class HibSerializerApplication extends Application {
 
-    public static WebCamPreviewViewController startWebCamModal() {
+    public static WebCamPreviewViewController startWebCamModal(Style style) {
         FXMLLoader fxmlLoader = new FXMLLoader(HibSerializerApplication.class.getResource("/views/webCamPreview.fxml"));
         Parent root = null;
         try {
@@ -30,7 +31,28 @@ public class HibSerializerApplication extends Application {
         stage.getIcons().add(new Image("icon.png"));
         Scene scene = new Scene(root, 900, 690);
         stage.setScene(scene);
-        JMetro jMetro = new JMetro(root, Style.LIGHT);
+        JMetro jMetro = new JMetro(root, style);
+        jMetro.setAutomaticallyColorPanes(true);
+        stage.showAndWait();
+        return fxmlLoader.getController();
+    }
+
+    public static SaveModalViewController startSaveModal(Style style) {
+        FXMLLoader fxmlLoader = new FXMLLoader(HibSerializerApplication.class.getResource("/views/save-modal.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setTitle("Do you want to save the changes?");
+        stage.getIcons().add(new Image("icon.png"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        JMetro jMetro = new JMetro(root, style);
         jMetro.setAutomaticallyColorPanes(true);
         stage.showAndWait();
         return fxmlLoader.getController();
