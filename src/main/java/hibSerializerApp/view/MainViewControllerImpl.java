@@ -32,11 +32,10 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     public Button fileSelectBtn;
     public Text currentDir;
     public Button searchButton;
-
-    @FXML
-    private ChoiceBox<Language> languageBox;
     @FXML
     TextField pages;
+    @FXML
+    private ChoiceBox<Language> languageBox;
     @FXML
     private TextField nameRu;
     @FXML
