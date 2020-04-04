@@ -2,13 +2,13 @@
 
 <?import hibSerializerApp.model.*?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1200.0" maxWidth="1457.0" minHeight="600.0" minWidth="600.0"
-            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            prefHeight="896.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/8"
             fx:controller="hibSerializerApp.view.MainViewControllerImpl">
     <left>
         <BorderPane prefHeight="575.0" prefWidth="358.0" BorderPane.alignment="CENTER">
@@ -29,7 +29,11 @@
                         <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <center>
                                 <TextField fx:id="searchField" prefHeight="25.0" prefWidth="291.0"
-                                           BorderPane.alignment="CENTER"/>
+                                           BorderPane.alignment="CENTER">
+                                    <BorderPane.margin>
+                                        <Insets left="20.0"/>
+                                    </BorderPane.margin>
+                                </TextField>
                             </center>
                             <right>
                                 <Button fx:id="fileSelectBtn" mnemonicParsing="false" onAction="#selectSearchDirectory"
@@ -52,12 +56,17 @@
             </top>
             <center>
                 <ListView fx:id="previewListView" onMouseClicked="#selectPreviewItem" prefHeight="437.0"
-                          prefWidth="358.0" BorderPane.alignment="CENTER"/>
+                          prefWidth="358.0" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets bottom="20.0" left="36.0" top="10.0"/>
+                    </BorderPane.margin>
+                </ListView>
             </center>
         </BorderPane>
     </left>
     <center>
-        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #efefef;"
+                    BorderPane.alignment="CENTER">
             <top>
                 <BorderPane prefHeight="487.0" prefWidth="1093.0" BorderPane.alignment="CENTER">
                     <left>
@@ -69,23 +78,29 @@
                                         <Font size="18.0"/>
                                     </font>
                                 </Text>
-                                <Button layoutX="78.0" layoutY="433.0" mnemonicParsing="false"
-                                        onAction="#getAvatarFromDisk" text="from disk" textOverrun="CLIP"/>
-                                <ImageView fx:id="avatarImage" fitHeight="365.0" fitWidth="350.0" layoutX="78.0"
-                                           layoutY="55.0" pickOnBounds="true" preserveRatio="true"/>
-                                <Button layoutX="348.0" layoutY="433.0" mnemonicParsing="false"
-                                        onAction="#getAvatarFromWebCam" text="make photo"/>
-                                <Button layoutX="443.0" layoutY="55.0" mnemonicParsing="false" onAction="#deleteAvatar"
-                                        text="X"/>
+                                <Button layoutX="416.0" layoutY="48.0" mnemonicParsing="false" onAction="#deleteAvatar"
+                                        text="X" style="-fx-background-color: #efefef;"/>
+                                <Pane layoutX="107.0" layoutY="48.0" prefHeight="392.0" prefWidth="301.0"
+                                      style="-fx-background-color: #dcdcdc;">
+                                    <children>
+                                        <ImageView fx:id="avatarImage" fitHeight="392.0" fitWidth="301.0"
+                                                   pickOnBounds="true" preserveRatio="true"/>
+                                    </children>
+                                </Pane>
+                                <Button layoutX="107.0" layoutY="449.0" maxWidth="124.0" minWidth="124.0"
+                                        mnemonicParsing="false" onAction="#getAvatarFromDisk" text="from disk"
+                                        textOverrun="CLIP"/>
+                                <Button layoutX="284.0" layoutY="449.0" maxWidth="124.0" minWidth="124.0"
+                                        mnemonicParsing="false" onAction="#getAvatarFromWebCam" text="make photo"/>
                             </children>
                         </Pane>
                     </left>
                     <right>
                         <Pane prefHeight="487.0" prefWidth="564.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Button layoutX="68.0" layoutY="437.0" mnemonicParsing="false"
+                                <Button layoutX="87.0" layoutY="450.0" minWidth="124.0" mnemonicParsing="false"
                                         onAction="#addAdditionalFromDisk" text="from disk"/>
-                                <Button layoutX="419.0" layoutY="437.0" mnemonicParsing="false"
+                                <Button layoutX="353.0" layoutY="450.0" minWidth="124.0" mnemonicParsing="false"
                                         onAction="#addAdditionalFromWebCam" text="make photo"/>
                                 <Text layoutX="253.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="Add photo">
@@ -93,36 +108,29 @@
                                         <Font size="18.0"/>
                                     </font>
                                 </Text>
-                                <ListView fx:id="additionalListView" layoutX="68.0" layoutY="56.0" prefHeight="368.0"
-                                          prefWidth="431.0"/>
-                                <Button layoutX="506.0" layoutY="56.0" mnemonicParsing="false"
-                                        onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0" text="X"/>
+                                <ListView fx:id="additionalListView" layoutX="87.0" layoutY="48.0" prefHeight="392.0"
+                                          prefWidth="390.0" style="-fx-background-color: #dcdcdc;"/>
+                                <Button layoutX="486.0" layoutY="48.0" mnemonicParsing="false"
+                                        onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0" text="X"
+                                        style="-fx-background-color: #efefef;"/>
                             </children>
                         </Pane>
                     </right>
                 </BorderPane>
             </top>
             <bottom>
-                <Pane prefHeight="159.0" prefWidth="614.0" BorderPane.alignment="CENTER">
+                <Pane prefHeight="136.0" prefWidth="1099.0" style="-fx-background-color: #f9f9f9;"
+                      BorderPane.alignment="CENTER">
                     <children>
-                        <Button fx:id="serializeBtn" layoutX="509.0" layoutY="92.0" mnemonicParsing="false"
-                                onAction="#serialize" text="Save"/>
-                        <Button fx:id="cancelBtn" layoutX="209.0" layoutY="92.0" mnemonicParsing="false"
-                                onAction="#cancel" text="Clear"/>
-                        <Button fx:id="deserializeBtn" layoutX="312.0" layoutY="92.0" mnemonicParsing="false"
-                                onAction="#deserialize" text="Open"/>
                         <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
                         <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Year of edition"/>
-                        <TextField fx:id="price" layoutX="209.0" layoutY="39.0"/>
-                        <Text layoutX="209.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+                        <TextField fx:id="price" layoutX="209.0" layoutY="41.0"/>
+                        <Text layoutX="209.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
                         <TextField fx:id="pages" layoutX="17.0" layoutY="92.0"/>
                         <Text layoutX="18.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pages"/>
-
                         <Text layoutX="400.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Original language"/>
-                        <Button layoutX="400.0" layoutY="92.0" mnemonicParsing="false" onAction="#createNewFile"
-                                text="New"/>
                         <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="39.0" prefWidth="150.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -136,18 +144,20 @@
                                 </FXCollections>
                             </items>
                         </ChoiceBox>
-                        <Button layoutX="1023.0" layoutY="92.0" mnemonicParsing="false" onAction="#delete"
-                                text="Delete"/>
                     </children>
+                    <BorderPane.margin>
+                        <Insets bottom="20.0" right="36.0"/>
+                    </BorderPane.margin>
                 </Pane>
             </bottom>
             <center>
-                <TabPane prefHeight="223.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="110.0"
-                         BorderPane.alignment="CENTER">
+                <TabPane maxHeight="250.0" prefHeight="250.0" prefWidth="855.0" tabClosingPolicy="UNAVAILABLE"
+                         tabMinWidth="70.0" BorderPane.alignment="CENTER">
                     <tabs>
-                        <Tab text="ru">
+                        <Tab text="RU">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="614.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="614.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameRu" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorRu" layoutX="14.0" layoutY="104.0"/>
@@ -167,9 +177,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="en">
+                        <Tab text="EN">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameEn" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorEn" layoutX="14.0" layoutY="104.0"/>
@@ -188,9 +199,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="fr">
+                        <Tab text="FR">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameFr" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorFr" layoutX="14.0" layoutY="104.0"/>
@@ -209,9 +221,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="it">
+                        <Tab text="IT">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameIt" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorIt" layoutX="14.0" layoutY="104.0"/>
@@ -230,9 +243,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="de">
+                        <Tab text="DE">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameDe" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorDe" layoutX="14.0" layoutY="104.0"/>
@@ -251,9 +265,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="cs">
+                        <Tab text="CS">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameCs" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorCs" layoutX="14.0" layoutY="104.0"/>
@@ -272,9 +287,10 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="gr">
+                        <Tab text="GR">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="585.0"
+                                            style="-fx-background-color: #f9f9f9;">
                                     <children>
                                         <TextField fx:id="nameGr" layoutX="14.0" layoutY="29.0"/>
                                         <TextField fx:id="authorGr" layoutX="14.0" layoutY="104.0"/>
@@ -294,8 +310,37 @@
                             </content>
                         </Tab>
                     </tabs>
+                    <BorderPane.margin>
+                        <Insets/>
+                    </BorderPane.margin>
                 </TabPane>
             </center>
+            <right>
+                <Pane maxHeight="250.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f9f9f9;"
+                      BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="cancelBtn" layoutX="38.0" layoutY="44.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: white;"
+                                text="Clear"/>
+                        <Button fx:id="deserializeBtn" layoutX="38.0" layoutY="82.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#deserialize" style="-fx-background-color: white;"
+                                text="Open"/>
+                        <Button layoutX="38.0" layoutY="122.0" maxWidth="50.0" minWidth="124.0" mnemonicParsing="false"
+                                onAction="#createNewFile" style="-fx-background-color: white;" text="New"/>
+                        <Button fx:id="serializeBtn" layoutX="38.0" layoutY="160.0" maxWidth="50.0" minWidth="124.0"
+                                mnemonicParsing="false" onAction="#serialize" style="-fx-background-color: white;"
+                                text="Save"/>
+
+                        <Button layoutX="38.0" layoutY="211.0" minWidth="124.0" mnemonicParsing="false"
+                                onAction="#delete"
+                                style="-fx-border-width: 0.5; -fx-background-color: white; -fx-text-fill: red;"
+                                text="Delete"/>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets right="36.0"/>
+                    </BorderPane.margin>
+                </Pane>
+            </right>
         </BorderPane>
     </center>
 </BorderPane>
