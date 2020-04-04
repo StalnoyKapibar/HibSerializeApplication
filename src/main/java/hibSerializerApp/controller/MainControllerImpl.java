@@ -124,6 +124,7 @@ public class MainControllerImpl implements MainController {
     @Override
     public void selectPreviewItem(MainViewController mainViewController, MouseEvent mouseEvent) {
         Integer index = mainViewController.getSelectedItemIndex("preview");
+        if (index < 0) return;
         File file = preview.get(index).getLocation();
         deserializeFromDisk(mainViewController, file);
     }
@@ -247,7 +248,9 @@ public class MainControllerImpl implements MainController {
     @Override
     public void getAvatarFromDisk(ViewController viewController, ActionEvent ae) {
         try {
-            currentBook.setAvatar(fileSystemService.getFileBytes(viewController.getImageFromFileChooser(ae)));
+            File file = viewController.getImageFromFileChooser(ae);
+            if (file == null) return;
+            currentBook.setAvatar(fileSystemService.getFileBytes(file));
             setAvatarImage(viewController,
                     SwingFXUtils
                             .toFXImage(ImageIO.read(new ByteArrayInputStream(currentBook.getAvatar())), null));

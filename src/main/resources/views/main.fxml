@@ -131,14 +131,14 @@
                         <TextField fx:id="year" layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="149.0"/>
                         <Text layoutX="17.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Year of edition"/>
-                        <TextField fx:id="price" layoutX="209.0" layoutY="41.0"/>
-                        <Text layoutX="209.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
+                        <TextField fx:id="price" layoutX="199.0" layoutY="41.0"/>
+                        <Text layoutX="200.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price"/>
                         <TextField fx:id="pages" layoutX="17.0" layoutY="92.0"/>
                         <Text layoutX="18.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Amount of pages"/>
-                        <Text layoutX="400.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                        <Text layoutX="400.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="Original language"/>
-                        <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="39.0" prefWidth="150.0">
+                        <ChoiceBox fx:id="languageBox" layoutX="400.0" layoutY="41.0" prefWidth="150.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <Language fx:value="RU"/>

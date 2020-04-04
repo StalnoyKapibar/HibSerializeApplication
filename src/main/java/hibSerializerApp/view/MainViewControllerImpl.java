@@ -189,6 +189,7 @@ public class MainViewControllerImpl implements MainViewController {
     public File getHibFileFromDisk(ActionEvent event) {
         Node source = (Node) event.getSource();
         File file = hibFileChooser.showOpenDialog(source.getScene().getWindow());
+        if (file == null) return null;
         if (file.isDirectory()) {
             hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
         } else {
@@ -216,6 +217,7 @@ public class MainViewControllerImpl implements MainViewController {
     public File getImageFromFileChooser(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         File file = fileChooser.showOpenDialog(source.getScene().getWindow());
+        if (file == null) return null;
         if (file.isDirectory()) {
             hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
         } else {
@@ -228,7 +230,7 @@ public class MainViewControllerImpl implements MainViewController {
     public List<File> getFilesFromFileChooser(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         List<File> files = fileChooser.showOpenMultipleDialog(source.getScene().getWindow());
-        if (files.isEmpty()) return Collections.emptyList();
+        if (files == null) return Collections.emptyList();
         if (files.get(0).isDirectory()) {
             hibFileChooser.setInitialDirectory(files.get(0).getAbsoluteFile());
         } else {
