@@ -80,7 +80,7 @@
                                     </font>
                                 </Text>
                                 <Button layoutX="307.0" layoutY="48.0" mnemonicParsing="false" onAction="#deleteAvatar"
-                                        style="-fx-background-color: #efefef;" text="X"/>
+                                        style="-fx-background-color: #252525;" text="X"/>
                                 <Pane layoutX="6.0" layoutY="48.0" prefHeight="392.0" prefWidth="301.0"
                                       style="-fx-background-color: #2d2d2d;">
                                     <children>
@@ -116,10 +116,10 @@
                                           prefWidth="390.0" style="-fx-background-color: #2d2d2d;"/>
                                 <Button layoutX="404.0" layoutY="48.0" mnemonicParsing="false"
                                         onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0"
-                                        style="-fx-background-color: #efefef;" text="X"/>
+                                        style="-fx-background-color: #252525;" text="X"/>
                                 <Button layoutX="280.0" layoutY="10.0" minWidth="124.0" mnemonicParsing="false"
-                                        onAction="#enableNightMode"
-                                        style="-fx-background-color: #2d2d2d; -fx-text-fill: #fff;" text="Night Mode"/>
+                                        onAction="#enableLightMode"
+                                        style="-fx-background-color: #2d2d2d; -fx-text-fill: #fff;" text="Light Mode"/>
                             </children>
                         </Pane>
                     </right>
