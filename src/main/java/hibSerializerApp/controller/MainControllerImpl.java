@@ -9,6 +9,7 @@ import hibSerializerApp.service.BookServiceImpl;
 import hibSerializerApp.service.FileSystemServiceImpl;
 import hibSerializerApp.service.abstraction.BookService;
 import hibSerializerApp.service.abstraction.FileSystemService;
+import hibSerializerApp.view.MainViewControllerImpl;
 import hibSerializerApp.view.SaveModalViewController;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import hibSerializerApp.view.abstraction.MainViewController;
@@ -66,12 +67,13 @@ public class MainControllerImpl implements MainController {
     }
 
     public void serialize(MainViewController viewController, ActionEvent ae) {
+        collectCurrentBook(viewController, ae);
         if (currentFile == null) {
-            currentFile = viewController.getPathForSaveHibFile(ae);
+            currentFile = viewController.getPathForSaveHibFile(ae,
+                    getOriginalLanguageFileName());
             if (currentFile == null) return;
             viewController.setTextInField("currentDir", currentFile.getAbsolutePath());
         }
-        collectCurrentBook(viewController, ae);
         try {
             bookService.saveBook(currentBook, currentFile);
         } catch (IOException e) {
@@ -94,6 +96,13 @@ public class MainControllerImpl implements MainController {
         currentFile = mainViewController.getPathForSaveHibFile(event);
         if (currentFile == null) return;
         mainViewController.setTextInField("currentDir", currentFile.getAbsolutePath());
+    }
+
+    @Override
+    public void openImage(MainViewControllerImpl mainViewController, MouseEvent mouseEvent) {
+        Integer index = mainViewController.getSelectedItemIndex("additional");
+        if (index < 0) return;
+        HibSerializerApplication.openImage(currentStyle, currentBook.getAdditionalPhotos().get(index));
     }
 
     private void collectCurrentBook(MainViewController mainViewController, ActionEvent event) {
@@ -431,6 +440,46 @@ public class MainControllerImpl implements MainController {
             viewController.showError(e);
             return null;
         }
+    }
+
+    private String getOriginalLanguageFileName() {
+        LocaleString name = currentBook.getName();
+        LocaleString author = currentBook.getAuthor();
+        String result;
+        if (currentBook.getOriginalLanguage() == null) return null;
+        switch (currentBook.getOriginalLanguage()) {
+            case RU:
+                result = currentBook.getOriginalLanguage().name() + "_"
+                        + currentBook.getAuthor().getRu() + "_" + currentBook.getName().getRu();
+                break;
+            case EN:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getEn() + "_" + currentBook.getName().getEn();
+                break;
+            case FR:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getFr() + "_" + currentBook.getName().getFr();
+                break;
+            case IT:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getIt() + "_" + currentBook.getName().getIt();
+                break;
+            case DE:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getDe() + "_" + currentBook.getName().getDe();
+                break;
+            case CS:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getCs() + "_" + currentBook.getName().getCs();
+                break;
+            case GR:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getAuthor().getGr() + "_" + currentBook.getName().getGr();
+                break;
+            default:
+                throw new IllegalArgumentException(currentBook.getOriginalLanguage().name() + " Not Found");
+        }
+        return result;
     }
 
     private void startSaveModal(Action actionDontSave,

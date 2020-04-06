@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="896.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="hibSerializerApp.view.ImageViewModalViewController">
+   <children>
+      <ImageView fx:id="image" fitHeight="873.0" fitWidth="984.0" layoutX="151.0" layoutY="19.0" pickOnBounds="true"
+                 preserveRatio="true"/>
+   </children>
+</AnchorPane>

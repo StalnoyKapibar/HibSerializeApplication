@@ -1,5 +1,6 @@
 package hibSerializerApp;
 
+import hibSerializerApp.view.ImageViewModalViewController;
 import hibSerializerApp.view.SaveModalViewController;
 import hibSerializerApp.view.WebCamPreviewViewController;
 import javafx.application.Application;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class HibSerializerApplication extends Application {
@@ -41,6 +43,28 @@ public class HibSerializerApplication extends Application {
         return fxmlLoader.getController();
     }
 
+    public static void openImage(Style style, byte[] bytes) {
+        FXMLLoader fxmlLoader = new FXMLLoader(HibSerializerApplication.class.getResource("/views/image-view-modal.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setTitle("Image");
+        stage.getIcons().add(new Image("icon.png"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        JMetro jMetro = new JMetro(root, style);
+        jMetro.setAutomaticallyColorPanes(true);
+        ImageViewModalViewController imageViewModalViewController = fxmlLoader.getController();
+        imageViewModalViewController.getImage().setImage(new Image(new ByteArrayInputStream(bytes)));
+        stage.showAndWait();
+    }
+
     public static SaveModalViewController startSaveModal(Style style) {
         FXMLLoader fxmlLoader = new FXMLLoader(HibSerializerApplication.class.getResource("/views/save-modal.fxml"));
         Parent root = null;
@@ -58,7 +82,7 @@ public class HibSerializerApplication extends Application {
         stage.setScene(scene);
         JMetro jMetro = new JMetro(root, style);
         jMetro.setAutomaticallyColorPanes(true);
-        stage.showAndWait();
+        stage.show();
         return fxmlLoader.getController();
     }
 

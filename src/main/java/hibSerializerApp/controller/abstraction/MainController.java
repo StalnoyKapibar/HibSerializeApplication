@@ -1,5 +1,6 @@
 package hibSerializerApp.controller.abstraction;
 
+import hibSerializerApp.view.MainViewControllerImpl;
 import hibSerializerApp.view.abstraction.MainViewController;
 import hibSerializerApp.view.abstraction.ViewController;
 import javafx.event.ActionEvent;
@@ -38,4 +39,6 @@ public interface MainController extends Controller {
     void cancel(MainViewController MainViewController, ActionEvent event);
 
     void createNew(MainViewController mainViewController, ActionEvent event);
+
+    void openImage(MainViewControllerImpl mainViewController, MouseEvent mouseEvent);
 }

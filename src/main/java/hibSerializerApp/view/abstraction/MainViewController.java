@@ -17,6 +17,8 @@ public interface MainViewController extends ViewController {
 
     void addAdditionalImages(List<Image> images);
 
+    File getPathForSaveHibFile(ActionEvent event, String fileSuggested);
+
     File getPathForSaveHibFile(ActionEvent event);
 
     File getHibFileFromDisk(ActionEvent event);
