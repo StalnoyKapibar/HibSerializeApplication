@@ -174,8 +174,19 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     }
 
     @Override
+    public File getPathForSaveHibFile(ActionEvent event, String fileSuggested) {
+        Node source = (Node) event.getSource();
+        hibFileChooser.setInitialFileName(fileSuggested);
+        return getFile(source);
+    }
+
+    @Override
     public File getPathForSaveHibFile(ActionEvent event) {
         Node source = (Node) event.getSource();
+        return getFile(source);
+    }
+
+    private File getFile(Node source) {
         File file = hibFileChooser.showSaveDialog(source.getScene().getWindow());
         if (file == null) return null;
         if (file.isDirectory()) {
@@ -336,6 +347,8 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     public Integer getSelectedItemIndex(String name) {
         if (name.equals("preview")) {
             return previewListView.getSelectionModel().getSelectedIndex();
+        } else if (name.equals("additional")) {
+            return additionalListView.getSelectionModel().getSelectedIndex();
         } else {
             throw new IllegalArgumentException("Nonexistent name " + name);
         }
@@ -443,6 +456,10 @@ public class MainViewControllerImpl implements MainViewController, Initializable
 
     public void enableLightMode(ActionEvent event) {
         mainController.enableLightMode(this, event);
+    }
+
+    public void openImage(MouseEvent mouseEvent) {
+        mainController.openImage(this, mouseEvent);
     }
 
     @Override

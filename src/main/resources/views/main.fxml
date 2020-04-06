@@ -112,8 +112,9 @@
                                         <Font size="18.0"/>
                                     </font>
                                 </Text>
-                                <ListView fx:id="additionalListView" layoutX="14.0" layoutY="48.0" prefHeight="392.0"
-                                          prefWidth="390.0" style="-fx-background-color: #dcdcdc;"/>
+                                <ListView fx:id="additionalListView" layoutX="14.0" layoutY="48.0"
+                                          onMouseClicked="#openImage" prefHeight="392.0" prefWidth="390.0"
+                                          style="-fx-background-color: #dcdcdc;"/>
                                 <Button layoutX="404.0" layoutY="48.0" mnemonicParsing="false"
                                         onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0"
                                         style="-fx-background-color: #efefef;" text="X"/>
