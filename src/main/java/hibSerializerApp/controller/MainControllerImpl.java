@@ -374,6 +374,7 @@ public class MainControllerImpl implements MainController {
     }
 
     private void addImagesToListView(MainViewController mainViewController) {
+        mainViewController.clearListView("additional");
         mainViewController.addAdditionalImages(currentBook.getAdditionalPhotos().stream().map(e -> {
             try {
                 return SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(e)), null);
