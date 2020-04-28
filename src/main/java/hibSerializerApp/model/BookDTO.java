@@ -13,7 +13,7 @@ public class BookDTO {
     private File location;
     private byte[] avatar;
     private Language originalLanguage;
-
+    private OtherLanguage otherLanguageOfBook;
     public BookDTO() {
     }
 }

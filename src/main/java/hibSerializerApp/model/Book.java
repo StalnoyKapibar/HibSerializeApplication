@@ -19,6 +19,8 @@ public class Book implements Serializable, Cloneable {
     private byte[] avatar;
     private List<byte[]> additionalPhotos;
     private Language originalLanguage;
+    private String category;
+    private OtherLanguage otherLanguageOfBook = new OtherLanguage();
 
     public Book(LocaleString name, LocaleString author, LocaleString desc, LocaleString edition) {
         this.name = name;
@@ -37,6 +39,7 @@ public class Book implements Serializable, Cloneable {
         newBook.author = author.clone();
         newBook.desc = desc.clone();
         newBook.edition = edition.clone();
+        newBook.otherLanguageOfBook = otherLanguageOfBook.clone();
         return newBook;
     }
 
