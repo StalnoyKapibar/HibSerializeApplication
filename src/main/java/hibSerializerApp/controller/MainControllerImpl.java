@@ -1,5 +1,11 @@
 package hibSerializerApp.controller;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
 import hibSerializerApp.HibSerializerApplication;
 import hibSerializerApp.controller.abstraction.MainController;
 import hibSerializerApp.model.Book;
@@ -33,25 +39,29 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MainControllerImpl implements MainController {
-    private static MainControllerImpl instance = new MainControllerImpl();
+    private static final MainControllerImpl instance = new MainControllerImpl();
     private final FileSystemService fileSystemService;
     private final BookService bookService;
     private Book originalBook;
     private Book currentBook;
-    private List<BookDTO> preview;
+    private final List<BookDTO> preview;
     private File currentFile;
     private Integer currentWebCam;
     private Style currentStyle = Style.LIGHT;
+    private final Firestore db;
+    private FirebaseOptions options;
 
     private MainControllerImpl() {
         currentBook = new Book();
@@ -60,6 +70,16 @@ public class MainControllerImpl implements MainController {
         preview = new ArrayList<>();
         fileSystemService = new FileSystemServiceImpl();
         bookService = new BookServiceImpl();
+        try {
+            // FileInputStream loadService = new FileInputStream("service.json");
+            options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(Objects.requireNonNull(MainControllerImpl.class.getClassLoader().getResourceAsStream("service.json"))))
+                    .build();
+            FirebaseApp.initializeApp(options);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        db = FirestoreClient.getFirestore();
     }
 
     public static MainControllerImpl getInstance() {
@@ -83,6 +103,7 @@ public class MainControllerImpl implements MainController {
         if (!viewController.getTextFromField("search").equals("")) {
             searchHibFilesFromPath(viewController, ae);
         }
+        originalBook = currentBook;
     }
 
     @Override
@@ -103,6 +124,62 @@ public class MainControllerImpl implements MainController {
         Integer index = mainViewController.getSelectedItemIndex("additional");
         if (index < 0) return;
         HibSerializerApplication.openImage(currentStyle, currentBook.getAdditionalPhotos().get(index));
+        addImagesToListView(mainViewController);
+    }
+
+    @Override
+    public void connectToWorkspace(MainViewControllerImpl mainViewController, ActionEvent event) {
+        String workspace = mainViewController.getTextFromField("workspace");
+        DocumentReference avatarDf = db.collection("images-avatar")
+                .document(workspace);
+        DocumentReference additionalDf = db.collection("images-additional")
+                .document(workspace);
+
+        avatarDf.addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                System.err.println("Listen failed" + e);
+                return;
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    BufferedImage bi = ImageIO.read(new URL(documentSnapshot.get("url").toString()));
+                    setAvatarImage(mainViewController, SwingFXUtils.toFXImage(bi, null));
+                    ImageIO.write(bi, "jpg", baos);
+                    currentBook.setAvatar(baos.toByteArray());
+                    documentSnapshot.getReference().delete();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        additionalDf.addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                System.err.println("Listen failed" + e);
+                return;
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    BufferedImage bi = ImageIO.read(new URL(documentSnapshot.get("url").toString()));
+                    ImageIO.write(bi, "jpg", baos);
+                    currentBook.getAdditionalPhotos().add(baos.toByteArray());
+                    addImagesToListView(mainViewController);
+                    documentSnapshot.getReference().delete();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void openAvatar(MainViewControllerImpl mainViewController, MouseEvent mouseEvent) {
+        if (currentBook.getAvatar() != null) {
+            HibSerializerApplication.openImage(currentStyle, currentBook.getAvatar());
+        }
     }
 
     private void collectCurrentBook(MainViewController mainViewController, ActionEvent event) {
@@ -111,6 +188,8 @@ public class MainControllerImpl implements MainController {
         currentBook.setDesc(new LocaleString(mainViewController.getLocaleRows("desc")));
         currentBook.setEdition(new LocaleString(mainViewController.getLocaleRows("edition")));
         currentBook.setYearOfEdition(mainViewController.getTextFromField("year"));
+        currentBook.setOtherLanguageOfBook(mainViewController.getOtherLanguageRows());
+        currentBook.setCategory(mainViewController.getTextFromField("category"));
         try {
             currentBook.setPages(Long.parseLong(mainViewController.getTextFromField("pages")));
             currentBook.setPrice(Long.parseLong(mainViewController.getTextFromField("price")));
@@ -147,6 +226,7 @@ public class MainControllerImpl implements MainController {
         currentBook = new Book();
         originalBook = new Book();
         currentBook.setAdditionalPhotos(new ArrayList<>());
+        System.gc();
     }
 
     @Override
@@ -173,7 +253,6 @@ public class MainControllerImpl implements MainController {
     public void createNewFile(MainViewController mainViewController, ActionEvent event) {
         startSaveModal(e -> e.createNew(mainViewController, event), mainViewController, event);
     }
-
 
     @Override
     public void delete(MainViewController mainViewController, ActionEvent event) {
@@ -214,11 +293,13 @@ public class MainControllerImpl implements MainController {
             mainViewController.setLocaleRows(currentBook.getAuthor(), "author");
             mainViewController.setLocaleRows(currentBook.getDesc(), "desc");
             mainViewController.setLocaleRows(currentBook.getEdition(), "edition");
+            mainViewController.setOtherLanguageRows(currentBook.getOtherLanguageOfBook());
+            mainViewController.setLanguageInChoiceBox(currentBook.getOriginalLanguage());
 
             mainViewController.setTextInField("year", currentBook.getYearOfEdition());
+            mainViewController.setTextInField("category", currentBook.getCategory());
             mainViewController.setTextInField("pages", currentBook.getPages().toString());
             mainViewController.setTextInField("price", currentBook.getPrice().toString());
-            mainViewController.setLanguageInChoiceBox(currentBook.getOriginalLanguage());
         } catch (NullPointerException ignored) {
             //ignored
         }
@@ -433,6 +514,10 @@ public class MainControllerImpl implements MainController {
                     result = " " + author.getGr()
                             + " - " + name.getGr() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
                     break;
+                case OTHER:
+                    result = " " + book.getOtherLanguageOfBook().getTranslitAuthor()
+                            + " - " + book.getOtherLanguageOfBook().getTranslitNameBook() + "\n\n\n\n\n\n\n\n " + book.getLocation().getName();
+                    break;
                 default:
                     throw new IllegalArgumentException(book.getOriginalLanguage().name() + " Not Found");
             }
@@ -444,8 +529,6 @@ public class MainControllerImpl implements MainController {
     }
 
     private String getOriginalLanguageFileName() {
-        LocaleString name = currentBook.getName();
-        LocaleString author = currentBook.getAuthor();
         String result;
         if (currentBook.getOriginalLanguage() == null) return null;
         switch (currentBook.getOriginalLanguage()) {
@@ -477,10 +560,14 @@ public class MainControllerImpl implements MainController {
                 result = currentBook.getOriginalLanguage().name()
                         + "_" + currentBook.getAuthor().getGr() + "_" + currentBook.getName().getGr();
                 break;
+            case OTHER:
+                result = currentBook.getOriginalLanguage().name()
+                        + "_" + currentBook.getOtherLanguageOfBook().getTranslitAuthor() + "_" + currentBook.getOtherLanguageOfBook().getTranslitNameBook();
+                break;
             default:
                 throw new IllegalArgumentException(currentBook.getOriginalLanguage().name() + " Not Found");
         }
-        return result;
+        return result.replaceAll(" ", "_");
     }
 
     private void startSaveModal(Action actionDontSave,
@@ -493,6 +580,7 @@ public class MainControllerImpl implements MainController {
             if (saveModalViewController.getSave() != null) {
                 if (saveModalViewController.getSave()) {
                     this.serialize(mainViewController, actionEvent);
+                    actionDontSave.doAction(this);
                 } else {
                     actionDontSave.doAction(this);
                 }

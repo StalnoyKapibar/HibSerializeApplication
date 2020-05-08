@@ -4,6 +4,8 @@ import hibSerializerApp.controller.MainControllerImpl;
 import hibSerializerApp.controller.abstraction.MainController;
 import hibSerializerApp.model.Language;
 import hibSerializerApp.model.LocaleString;
+import hibSerializerApp.model.OtherLanguage;
+import hibSerializerApp.util.PropertyReader;
 import hibSerializerApp.view.abstraction.MainViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +27,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainViewControllerImpl implements MainViewController, Initializable {
+    private static final String DIRECTORY_PROPERTIES = "directorypath.properties";
+    private static final String DIRECTORY_SELECT_PATH = "directory.select.path";
+    private static final String HIB_SELECT_PATH = "hib.path";
+    private static final String IMAGE_SELECT_PATH = "images.path";
     private final FileChooser fileChooser;
     private final FileChooser hibFileChooser;
     private final DirectoryChooser directoryChooser;
@@ -32,8 +38,15 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     public Button fileSelectBtn;
     public Text currentDir;
     public Button searchButton;
+    public TextField workspaceNumber;
+    public TextField nameOL;
+    public TextField authorOL;
+    public TextField transliteName;
+    public TextField transliteAuthor;
+    public TextField category;
     @FXML
     TextField pages;
+    Properties filePaths;
     @FXML
     private ChoiceBox<Language> languageBox;
     @FXML
@@ -105,6 +118,7 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     @FXML
     private TextField searchField;
 
+
     public MainViewControllerImpl() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
@@ -119,6 +133,17 @@ public class MainViewControllerImpl implements MainViewController, Initializable
         directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select search directory");
         mainController = MainControllerImpl.getInstance();
+
+        filePaths = PropertyReader.read(DIRECTORY_PROPERTIES);
+        if (!filePaths.getProperty(HIB_SELECT_PATH).equals("")) {
+            hibFileChooser.setInitialDirectory(new File(filePaths.getProperty(HIB_SELECT_PATH)));
+        }
+        if (!filePaths.getProperty(DIRECTORY_SELECT_PATH).equals("")) {
+            directoryChooser.setInitialDirectory(new File(filePaths.getProperty(DIRECTORY_SELECT_PATH)));
+        }
+        if (!filePaths.getProperty(IMAGE_SELECT_PATH).equals("")) {
+            fileChooser.setInitialDirectory(new File(filePaths.getProperty(IMAGE_SELECT_PATH)));
+        }
     }
 
     @Override
@@ -194,6 +219,8 @@ public class MainViewControllerImpl implements MainViewController, Initializable
         } else {
             hibFileChooser.setInitialDirectory(file.getParentFile());
         }
+        PropertyReader.writeValue(DIRECTORY_PROPERTIES, HIB_SELECT_PATH,
+                hibFileChooser.getInitialDirectory().getAbsolutePath());
         return file;
     }
 
@@ -207,6 +234,8 @@ public class MainViewControllerImpl implements MainViewController, Initializable
         } else {
             hibFileChooser.setInitialDirectory(file.getParentFile());
         }
+        PropertyReader.writeValue(DIRECTORY_PROPERTIES, HIB_SELECT_PATH,
+                hibFileChooser.getInitialDirectory().getAbsolutePath());
         return file;
     }
 
@@ -226,15 +255,35 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     }
 
     @Override
+    public OtherLanguage getOtherLanguageRows() {
+        OtherLanguage otherLanguage = new OtherLanguage();
+        otherLanguage.setOtherLangNameBook(nameOL.getText());
+        otherLanguage.setOtherLangAuthor(authorOL.getText());
+        otherLanguage.setTranslitNameBook(transliteName.getText());
+        otherLanguage.setTranslitAuthor(transliteAuthor.getText());
+        return otherLanguage;
+    }
+
+    @Override
+    public void setOtherLanguageRows(OtherLanguage otherLanguageOfBook) {
+        nameOL.setText(otherLanguageOfBook.getOtherLangNameBook());
+        authorOL.setText(otherLanguageOfBook.getOtherLangAuthor());
+        transliteName.setText(otherLanguageOfBook.getTranslitNameBook());
+        transliteAuthor.setText(otherLanguageOfBook.getTranslitAuthor());
+    }
+
+    @Override
     public File getImageFromFileChooser(ActionEvent ae) {
         Node source = (Node) ae.getSource();
         File file = fileChooser.showOpenDialog(source.getScene().getWindow());
         if (file == null) return null;
         if (file.isDirectory()) {
-            hibFileChooser.setInitialDirectory(file.getAbsoluteFile());
+            fileChooser.setInitialDirectory(file.getAbsoluteFile());
         } else {
-            hibFileChooser.setInitialDirectory(file.getParentFile());
+            fileChooser.setInitialDirectory(file.getParentFile());
         }
+        PropertyReader.writeValue(DIRECTORY_PROPERTIES, IMAGE_SELECT_PATH,
+                fileChooser.getInitialDirectory().getAbsolutePath());
         return file;
     }
 
@@ -244,10 +293,12 @@ public class MainViewControllerImpl implements MainViewController, Initializable
         List<File> files = fileChooser.showOpenMultipleDialog(source.getScene().getWindow());
         if (files == null) return Collections.emptyList();
         if (files.get(0).isDirectory()) {
-            hibFileChooser.setInitialDirectory(files.get(0).getAbsoluteFile());
+            fileChooser.setInitialDirectory(files.get(0).getAbsoluteFile());
         } else {
-            hibFileChooser.setInitialDirectory(files.get(0).getParentFile());
+            fileChooser.setInitialDirectory(files.get(0).getParentFile());
         }
+        PropertyReader.writeValue(DIRECTORY_PROPERTIES, IMAGE_SELECT_PATH,
+                fileChooser.getInitialDirectory().getAbsolutePath());
         return files;
     }
 
@@ -263,6 +314,8 @@ public class MainViewControllerImpl implements MainViewController, Initializable
             hibFileChooser.setInitialDirectory(file.getParentFile());
             directoryChooser.setInitialDirectory(file.getParentFile());
         }
+        PropertyReader.writeValue(DIRECTORY_PROPERTIES, DIRECTORY_SELECT_PATH,
+                hibFileChooser.getInitialDirectory().getAbsolutePath());
         return file;
     }
 
@@ -277,6 +330,10 @@ public class MainViewControllerImpl implements MainViewController, Initializable
                 return price.getText();
             case "search":
                 return searchField.getText();
+            case "workspace":
+                return workspaceNumber.getText();
+            case "category":
+                return category.getText();
             default:
                 throw new IllegalArgumentException("Nonexistent name " + name);
         }
@@ -303,6 +360,8 @@ public class MainViewControllerImpl implements MainViewController, Initializable
             searchField.setText(text);
         } else if (name.equals("currentDir")) {
             currentDir.setText(text);
+        } else if (name.equals("category")) {
+            category.setText(text);
         } else {
             throw new IllegalArgumentException("Nonexistent name " + name);
         }
@@ -465,5 +524,13 @@ public class MainViewControllerImpl implements MainViewController, Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchButton.setGraphic(new MDL2IconFont("\uE721"));
+    }
+
+    public void connectToWorkspace(ActionEvent event) {
+        mainController.connectToWorkspace(this, event);
+    }
+
+    public void openAvatar(MouseEvent mouseEvent) {
+        mainController.openAvatar(this, mouseEvent);
     }
 }

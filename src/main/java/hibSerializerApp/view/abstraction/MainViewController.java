@@ -2,6 +2,7 @@ package hibSerializerApp.view.abstraction;
 
 import hibSerializerApp.model.Language;
 import hibSerializerApp.model.LocaleString;
+import hibSerializerApp.model.OtherLanguage;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -28,4 +29,8 @@ public interface MainViewController extends ViewController {
     Language getLanguageFromChoiceBox();
 
     void setLanguageInChoiceBox(Language language);
+
+    OtherLanguage getOtherLanguageRows();
+
+    void setOtherLanguageRows(OtherLanguage otherLanguageOfBook);
 }

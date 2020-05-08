@@ -82,7 +82,7 @@ public class HibSerializerApplication extends Application {
         stage.setScene(scene);
         JMetro jMetro = new JMetro(root, style);
         jMetro.setAutomaticallyColorPanes(true);
-        stage.show();
+        stage.showAndWait();
         return fxmlLoader.getController();
     }
 

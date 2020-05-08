@@ -41,4 +41,8 @@ public interface MainController extends Controller {
     void createNew(MainViewController mainViewController, ActionEvent event);
 
     void openImage(MainViewControllerImpl mainViewController, MouseEvent mouseEvent);
+
+    void connectToWorkspace(MainViewControllerImpl mainViewController, ActionEvent event);
+
+    void openAvatar(MainViewControllerImpl mainViewController, MouseEvent mouseEvent);
 }

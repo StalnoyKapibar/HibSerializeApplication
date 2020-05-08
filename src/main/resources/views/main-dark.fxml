@@ -84,18 +84,25 @@
                                 </Text>
                                 <Button layoutX="307.0" layoutY="48.0" mnemonicParsing="false" onAction="#deleteAvatar"
                                         style="-fx-background-color: #252525;" text="X"/>
-                                <Pane layoutX="6.0" layoutY="48.0" prefHeight="360.0" prefWidth="301.0"
-                                      style="-fx-background-color: #2d2d2d;">
+                                <Pane layoutX="6.0" layoutY="48.0" onMouseClicked="#openAvatar" prefHeight="327.0"
+                                      prefWidth="301.0" style="-fx-background-color: #2d2d2d;">
                                     <children>
-                                        <ImageView fx:id="avatarImage" fitHeight="361.0" fitWidth="301.0"
+                                        <ImageView fx:id="avatarImage" fitHeight="329.0" fitWidth="301.0"
                                                    pickOnBounds="true" preserveRatio="true"/>
                                     </children>
                                 </Pane>
-                                <Button layoutX="6.0" layoutY="415.0" maxWidth="124.0" minWidth="124.0"
+                                <Button layoutX="6.0" layoutY="379.0" maxWidth="124.0" minWidth="124.0"
                                         mnemonicParsing="false" onAction="#getAvatarFromDisk" text="From disk"
                                         textOverrun="CLIP"/>
-                                <Button layoutX="183.0" layoutY="415.0" maxWidth="124.0" minWidth="124.0"
+                                <Button layoutX="183.0" layoutY="379.0" maxWidth="124.0" minWidth="124.0"
                                         mnemonicParsing="false" onAction="#getAvatarFromWebCam" text="Make photo"/>
+                                <TextField fx:id="workspaceNumber" layoutX="6.0" layoutY="421.0" prefHeight="17.0"
+                                           prefWidth="125.0"/>
+                                <Text layoutX="6.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Workspace number"/>
+                                <Button layoutX="183.0" layoutY="419.0" mnemonicParsing="false"
+                                        onAction="#connectToWorkspace" prefHeight="25.0" prefWidth="125.0"
+                                        text="Connect"/>
                             </children>
                             <BorderPane.margin>
                                 <Insets left="35.0"/>
@@ -105,9 +112,9 @@
                     <right>
                         <Pane prefHeight="400.0" prefWidth="576.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Button layoutX="14.0" layoutY="416.0" minWidth="124.0" mnemonicParsing="false"
+                                <Button layoutX="14.0" layoutY="379.0" minWidth="124.0" mnemonicParsing="false"
                                         onAction="#addAdditionalFromDisk" text="From disk"/>
-                                <Button layoutX="280.0" layoutY="416.0" minWidth="124.0" mnemonicParsing="false"
+                                <Button layoutX="280.0" layoutY="379.0" minWidth="124.0" mnemonicParsing="false"
                                         onAction="#addAdditionalFromWebCam" text="Make photo"/>
                                 <Text layoutX="166.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0"
                                       text="Add photo">
@@ -116,14 +123,14 @@
                                     </font>
                                 </Text>
                                 <ListView fx:id="additionalListView" layoutX="14.0" layoutY="48.0"
-                                          onMouseClicked="#openImage" prefHeight="362.0" prefWidth="390.0"
+                                          onMouseClicked="#openImage" prefHeight="328.0" prefWidth="390.0"
                                           style="-fx-background-color: #2d2d2d;"/>
                                 <Button layoutX="404.0" layoutY="48.0" mnemonicParsing="false"
                                         onAction="#deleteAdditional" prefHeight="25.0" prefWidth="31.0"
                                         style="-fx-background-color: #252525;" text="X"/>
                                 <Button layoutX="280.0" layoutY="10.0" minWidth="124.0" mnemonicParsing="false"
-                                        onAction="#enableNightMode"
-                                        style="-fx-background-color: #2d2d2d; -fx-text-fill: #fff;" text="Night Mode"/>
+                                        onAction="#enableLightMode"
+                                        style="-fx-background-color: #2d2d2d; -fx-text-fill: #fff;" text="Light Mode"/>
                             </children>
                         </Pane>
                     </right>
